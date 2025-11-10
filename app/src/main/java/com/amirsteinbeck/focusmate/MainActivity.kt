@@ -22,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView)
 
         button.setOnClickListener {
-            textView.text = getString(R.string.goodbyeMessage)
+            if (textView.text == getString(R.string.goodbyeMessage)) {
+                textView.text = getString(R.string.helloMessage)
+            } else {
+                textView.text = getString(R.string.goodbyeMessage)
+            }
         }
     }
 }
