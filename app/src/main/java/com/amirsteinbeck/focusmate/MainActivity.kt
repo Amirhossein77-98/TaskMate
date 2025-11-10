@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val button = findViewById<Button>(R.id.TextChangerButton)
+        val button = findViewById<Button>(R.id.textChangerButton)
         val textView = findViewById<TextView>(R.id.textView)
 
         button.setOnClickListener {
