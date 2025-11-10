@@ -1,8 +1,10 @@
 package com.amirsteinbeck.focusmate
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -15,6 +17,12 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val button = findViewById<Button>(R.id.TextChangerButton)
+        val textView = findViewById<TextView>(R.id.textView)
+
+        button.setOnClickListener {
+            textView.text = getString(R.string.goodbyeMessage)
         }
     }
 }
