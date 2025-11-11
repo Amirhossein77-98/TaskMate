@@ -1,6 +1,9 @@
 <resources>
+    <string name="helloMessage">Hi there!</string>
+    <string name="goodbyeMessage">Bye there!</string>
+    <string name="helloToUser">Hello %1s!</string>
+    <string name="goodbyeToUser">Goodbye %1s!</string>
     <string name="app_name">FocusMate</string>
     <string name="click">Click</string>
-    <string name="helloMessage">Hello World!</string>
-    <string name="goodbyeMessage">Goodbye World!</string>
+    <string name="nameInputHint">Enter your name…</string>
 </resources>

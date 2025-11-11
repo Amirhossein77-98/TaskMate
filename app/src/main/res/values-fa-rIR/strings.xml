@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="goodbyeToUser">خدافظ %1s!</string>
+    <string name="app_name">رفیق تمرکز</string>
+    <string name="helloMessage">سلام جان!</string>
+    <string name="goodbyeMessage">خدافظ جان!</string>
+    <string name="helloToUser">سلام %1s!</string>
+    <string name="click">کلیک</string>
+    <string name="nameInputHint">اسمت رو وارد کن…</string>
+</resources>
