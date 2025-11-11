@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/nameInput"
         android:layout_width="match_parent"
-        android:layout_height="25pt"
+        android:layout_height="wrap_content"
         android:autofillHints="username, name"
         android:hint="@string/nameInputHint"
         android:inputType="text"

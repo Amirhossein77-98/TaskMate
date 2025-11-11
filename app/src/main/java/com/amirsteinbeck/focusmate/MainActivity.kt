@@ -23,27 +23,42 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView)
         val nameField = findViewById<EditText>(R.id.nameInput)
 
+// My Written code, I keep it to compare later for better learning:
+//        button.setOnClickListener {
+//            val goodbyeToUSerText = getString(R.string.goodbyeToUser, nameField.text)
+//            val helloToUSerText = getString(R.string.helloToUser, nameField.text)
+//
+//            if (nameField.text.isNotEmpty()) {
+//                if (textView.text.toString() == getString(R.string.helloMessage)||
+//                    textView.text.toString() == getString(R.string.goodbyeMessage) ||
+//                    textView.text.toString() == goodbyeToUSerText) {
+//                    textView.text = helloToUSerText
+//                } else {
+//                    textView.text = goodbyeToUSerText
+//                }
+//            } else {
+//                if (textView.text == getString(R.string.helloMessage) ||
+//                    textView.text == getString(R.string.helloToUser)) {
+//                    textView.text = getString(R.string.goodbyeMessage)
+//                } else {
+//                    textView.text = getString(R.string.helloMessage)
+//                }
+//            }
+//
+//        }
+
+// ChatGPT Correction with clearer logic and more efficiency:
+        var isHello = true
         button.setOnClickListener {
-            val goodbyeToUSerText = getString(R.string.goodbyeToUser, nameField.text)
-            val helloToUSerText = getString(R.string.helloToUser, nameField.text)
+            val name = nameField.text.toString().trim()
+            val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
+                            else getString(R.string.helloMessage)
+            val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
+                            else getString(R.string.goodbyeMessage)
 
-            if (nameField.text.isNotEmpty()) {
-                if (textView.text.toString() == getString(R.string.helloMessage)||
-                    textView.text.toString() == getString(R.string.goodbyeMessage) ||
-                    textView.text.toString() == goodbyeToUSerText) {
-                    textView.text = helloToUSerText
-                } else {
-                    textView.text = goodbyeToUSerText
-                }
-            } else {
-                if (textView.text == getString(R.string.helloMessage) ||
-                    textView.text == getString(R.string.helloToUser)) {
-                    textView.text = getString(R.string.goodbyeMessage)
-                } else {
-                    textView.text = getString(R.string.helloMessage)
-                }
-            }
-
+            textView.text = if (isHello) helloText else goodbyeText
+            isHello = !isHello
         }
+
     }
 }
