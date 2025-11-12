@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -47,16 +48,27 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
+        fun sayingHello(text: String, toastMessage: String) {
+            textView.text = text
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+        }
+        fun sayingGoodbye(text: String, toastMessage: String) {
+            textView.text = text
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+        }
+
 // ChatGPT Correction with clearer logic and more efficiency:
         var isHello = true
         button.setOnClickListener {
             val name = nameField.text.toString().trim()
+            val helloToast = getString(R.string.btnGreetingClick)
+            val goodbyeToast = getString(R.string.btnByeingClick)
             val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
                             else getString(R.string.helloMessage)
             val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
                             else getString(R.string.goodbyeMessage)
 
-            textView.text = if (isHello) helloText else goodbyeText
+            if (isHello) sayingHello(helloText, helloToast) else sayingGoodbye(goodbyeText, goodbyeToast)
             isHello = !isHello
         }
 

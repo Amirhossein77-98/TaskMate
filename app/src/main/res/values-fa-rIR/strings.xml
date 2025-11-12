@@ -7,4 +7,7 @@
     <string name="helloToUser">سلام %1s!</string>
     <string name="click">کلیک</string>
     <string name="nameInputHint">اسمت رو وارد کن…</string>
+    <string name="btnClick">دکمه کلیک شد!</string>
+    <string name="btnGreetingClick">سلام کردن...</string>
+    <string name="btnByeingClick">خدافظی کردن</string>
 </resources>
