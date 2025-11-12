@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.textChangerButton)
         val textView = findViewById<TextView>(R.id.textView)
         val nameField = findViewById<EditText>(R.id.nameInput)
+        val resetBtn = findViewById<Button>(R.id.resetButton)
 
 // My Written code, I keep it to compare later for better learning:
 //        button.setOnClickListener {
@@ -70,6 +71,11 @@ class MainActivity : AppCompatActivity() {
 
             if (isHello) sayingHello(helloText, helloToast) else sayingGoodbye(goodbyeText, goodbyeToast)
             isHello = !isHello
+        }
+
+        resetBtn.setOnClickListener {
+            textView.text = getString(R.string.helloMessage)
+            nameField.setText("")
         }
 
     }
