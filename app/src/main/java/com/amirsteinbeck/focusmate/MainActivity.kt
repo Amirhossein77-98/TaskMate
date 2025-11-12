@@ -9,21 +9,28 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val button = findViewById<Button>(R.id.textChangerButton)
-        val textView = findViewById<TextView>(R.id.textView)
-        val nameField = findViewById<EditText>(R.id.nameInput)
-        val resetBtn = findViewById<Button>(R.id.resetButton)
+// Needed Before Using Binding
+//        val button = findViewById<Button>(R.id.textChangerButton)
+//        val textView = findViewById<TextView>(R.id.textView)
+//        val nameField = findViewById<EditText>(R.id.nameInput)
+//        val resetBtn = findViewById<Button>(R.id.resetButton)
 
 // My Written code, I keep it to compare later for better learning:
 //        button.setOnClickListener {
@@ -50,18 +57,18 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         fun sayingHello(text: String, toastMessage: String) {
-            textView.text = text
+            binding.textView.text = text
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
         fun sayingGoodbye(text: String, toastMessage: String) {
-            textView.text = text
+            binding.textView.text = text
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
 
 // ChatGPT Correction with clearer logic and more efficiency:
         var isHello = true
-        button.setOnClickListener {
-            val name = nameField.text.toString().trim()
+        binding.textChangerButton.setOnClickListener {
+            val name = binding.nameInput.text.toString().trim()
             val helloToast = getString(R.string.btnGreetingClick)
             val goodbyeToast = getString(R.string.btnByeingClick)
             val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
@@ -73,9 +80,9 @@ class MainActivity : AppCompatActivity() {
             isHello = !isHello
         }
 
-        resetBtn.setOnClickListener {
-            textView.text = getString(R.string.helloMessage)
-            nameField.setText("")
+        binding.resetButton.setOnClickListener {
+            binding.textView.text = getString(R.string.helloMessage)
+            binding.nameInput.setText("")
         }
 
     }
