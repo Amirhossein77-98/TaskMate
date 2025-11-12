@@ -10,4 +10,5 @@
     <string name="btnClick">دکمه کلیک شد!</string>
     <string name="btnGreetingClick">سلام کردن...</string>
     <string name="btnByeingClick">خدافظی کردن</string>
+    <string name="resetBtnTxt">نوسازی همه چیز</string>
 </resources>
