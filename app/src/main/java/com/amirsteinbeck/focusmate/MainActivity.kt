@@ -56,14 +56,21 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
-        fun sayingHello(text: String, toastMessage: String) {
-            binding.textView.text = text
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
-        }
-        fun sayingGoodbye(text: String, toastMessage: String) {
-            binding.textView.text = text
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
-        }
+// My version of helper functions:
+//        fun sayingHello(text: String, toastMessage: String) {
+//            binding.textView.text = text
+//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+//        }
+//        fun sayingGoodbye(text: String, toastMessage: String) {
+//            binding.textView.text = text
+//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+//        }
+
+// ChatGPT's suggestion of a better and more efficient helper function:
+    fun updateTextAndToast(newText: String, toastMessage: String) {
+        binding.textView.text = newText
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+    }
 
 // ChatGPT Correction with clearer logic and more efficiency:
         var isHello = true
@@ -76,7 +83,11 @@ class MainActivity : AppCompatActivity() {
             val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
                             else getString(R.string.goodbyeMessage)
 
-            if (isHello) sayingHello(helloText, helloToast) else sayingGoodbye(goodbyeText, goodbyeToast)
+            if (isHello)
+                updateTextAndToast(helloText, helloToast)
+            else
+                updateTextAndToast(goodbyeText, goodbyeToast)
+
             isHello = !isHello
         }
 

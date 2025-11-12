@@ -53,6 +53,7 @@
         android:textSize="12sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/red"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
