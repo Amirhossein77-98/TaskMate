@@ -1,11 +1,8 @@
 package com.amirsteinbeck.focusmate
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -76,19 +73,26 @@ class MainActivity : AppCompatActivity() {
         var isHello = true
         binding.textChangerButton.setOnClickListener {
             val name = binding.nameInput.text.toString().trim()
-            val helloToast = getString(R.string.btnGreetingClick)
-            val goodbyeToast = getString(R.string.btnByeingClick)
-            val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
-                            else getString(R.string.helloMessage)
-            val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
-                            else getString(R.string.goodbyeMessage)
+            if ((name.length <= 3 && name.isNotEmpty()) || name.length > 30) {
+                binding.nameInputLayout.error = "Please enter a valid name or leave the field blank!"
+                return@setOnClickListener
+            } else {
+                if (binding.nameInputLayout.error != null) binding.nameInputLayout.error = null
 
-            if (isHello)
-                updateTextAndToast(helloText, helloToast)
-            else
-                updateTextAndToast(goodbyeText, goodbyeToast)
+                val helloToast = getString(R.string.btnGreetingClick)
+                val goodbyeToast = getString(R.string.btnByeingClick)
+                val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
+                else getString(R.string.helloMessage)
+                val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
+                else getString(R.string.goodbyeMessage)
 
-            isHello = !isHello
+                if (isHello)
+                    updateTextAndToast(goodbyeText, goodbyeToast)
+                else
+                    updateTextAndToast(helloText, helloToast)
+
+                isHello = !isHello
+            }
         }
 
         binding.resetButton.setOnClickListener {
