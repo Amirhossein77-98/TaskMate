@@ -99,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         binding.resetButton.setOnClickListener {
             binding.textView.text = getString(R.string.helloMessage)
             binding.nameInput.setText("")
+            binding.nameInputLayout.error = null
         }
 
         binding.rightPageButtonNavigator.setOnClickListener {
