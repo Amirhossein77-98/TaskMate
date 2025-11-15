@@ -81,4 +81,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rightPageButtonNavigator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/blueGreen"
+        android:layout_marginBottom="24dp"
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        app:icon="@drawable/baseline_arrow_forward_24"
+        app:iconTint="@color/white"
+        app:iconGravity="end"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/resetButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/leftPageButtonNavigator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/blueGreen"
+        android:layout_marginBottom="24dp"
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        app:icon="@drawable/baseline_arrow_back_24"
+        app:iconTint="@color/white"
+        app:iconGravity="start"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resetButton"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

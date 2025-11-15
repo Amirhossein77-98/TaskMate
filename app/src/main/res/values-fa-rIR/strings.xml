@@ -11,4 +11,7 @@
     <string name="btnGreetingClick">سلام کردن...</string>
     <string name="btnByeingClick">خدافظی کردن</string>
     <string name="resetBtnTxt">نوسازی همه چیز</string>
+    <string name="welcomeText">خوش اومدی داوش!</string>
+    <string name="nextPage">صفحه بعد</string>
+    <string name="previousPage">صفحه قبل</string>
 </resources>
