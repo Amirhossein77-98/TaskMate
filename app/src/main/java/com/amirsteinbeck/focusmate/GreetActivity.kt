@@ -1,5 +1,6 @@
 package com.amirsteinbeck.focusmate
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,5 +27,9 @@ class GreetActivity : AppCompatActivity() {
             getString(R.string.welcomeToUser, name)
         else
             getString(R.string.welcomeText)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 }
