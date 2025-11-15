@@ -11,6 +11,7 @@
     <string name="btnByeingClick">Byeing…</string>
     <string name="resetBtnTxt">Reset Everything!</string>
     <string name="welcomeText">Welcome Dude!</string>
+    <string name="welcomeToUser">Welcome to the world of android %1$s!</string>
     <string name="nextPage">Next Page</string>
     <string name="previousPage">Previous Page</string>
 </resources>
