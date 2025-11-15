@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/welcomeText"
         android:textSize="35sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

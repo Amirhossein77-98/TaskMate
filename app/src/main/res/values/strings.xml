@@ -14,4 +14,10 @@
     <string name="welcomeToUser">Welcome to the world of android %1$s!</string>
     <string name="nextPage">Next Page</string>
     <string name="previousPage">Previous Page</string>
+    <string name="githubLogoContentDesc">Github Logo</string>
+    <string name="author">Author: Amirhossein Gholizadeh</string>
+    <string name="projectName">App name: Focus Mate</string>
+    <string name="github">Github: Amirhossein77–98</string>
+    <string name="instagram">Instagram: dailyskillseeker</string>
+    <string name="telegram">Telegram: amirsteinbeck</string>
 </resources>

@@ -110,5 +110,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.leftPageButtonNavigator.setOnClickListener {
+            val intent = Intent(this, CredentialsActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

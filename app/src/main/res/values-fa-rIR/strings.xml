@@ -15,4 +15,10 @@
     <string name="welcomeToUser">به دنیای اندروید خوش اومدی %1$s!</string>
     <string name="nextPage">صفحه بعد</string>
     <string name="previousPage">صفحه قبل</string>
+    <string name="githubLogoContentDesc">لوگوی گیت هاب</string>
+    <string name="author">سازنده</string>
+    <string name="projectName">همراه تمرکز</string>
+    <string name="github">"گیت هاب: "</string>
+    <string name="instagram">"اینستاگرام: "</string>
+    <string name="telegram">"تلگرام: "</string>
 </resources>
