@@ -111,5 +111,9 @@ class MainActivity : AppCompatActivity() {
             NavigationHelper.goToCredentials(this)
         }
 
+        AnimationHelper.applyPressAnimation(this, binding.textChangerButton)
+        AnimationHelper.applyPressAnimation(this, binding.resetButton)
+        AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
+        AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
     }
 }
