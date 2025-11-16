@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 // ChatGPT's suggestion of a better and more efficient helper function:
     fun updateTextAndToast(newText: String, toastMessage: String) {
         binding.textView.text = newText
-        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, toastMessage, Toast.LENGTH_SHORT).show()
     }
 
 // ChatGPT Correction with clearer logic and more efficiency:
