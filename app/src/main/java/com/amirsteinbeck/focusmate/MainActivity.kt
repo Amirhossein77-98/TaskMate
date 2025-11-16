@@ -104,15 +104,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.rightPageButtonNavigator.setOnClickListener {
             val name = binding.nameInput.text.toString().trim()
-
-            val intent = Intent(this, GreetActivity::class.java)
-            intent.putExtra("USERNAME", name)
-            startActivity(intent)
+            NavigationHelper.goToGreet(this, name)
         }
 
         binding.leftPageButtonNavigator.setOnClickListener {
-            val intent = Intent(this, CredentialsActivity::class.java)
-            startActivity(intent)
+            NavigationHelper.goToCredentials(this)
         }
 
     }

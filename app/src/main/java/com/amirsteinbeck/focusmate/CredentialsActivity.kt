@@ -30,7 +30,7 @@ class CredentialsActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.backButton.setOnClickListener {
-            finish()
+            NavigationHelper.goBack(this)
         }
     }
 }

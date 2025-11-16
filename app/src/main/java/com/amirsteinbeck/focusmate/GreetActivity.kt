@@ -29,7 +29,7 @@ class GreetActivity : AppCompatActivity() {
             getString(R.string.welcomeText)
 
         binding.backButton.setOnClickListener {
-            finish()
+            NavigationHelper.goBack(this)
         }
     }
 }
