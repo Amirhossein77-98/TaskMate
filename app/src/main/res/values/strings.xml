@@ -20,4 +20,6 @@
     <string name="github">Github: Amirhossein77–98</string>
     <string name="instagram">Instagram: dailyskillseeker</string>
     <string name="telegram">Telegram: amirsteinbeck</string>
+    <string name="namePlaceholder">Name</string>
+    <string name="descriptionPlaceholder">Description</string>
 </resources>

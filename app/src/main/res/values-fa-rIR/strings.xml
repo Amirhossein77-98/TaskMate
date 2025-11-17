@@ -21,4 +21,6 @@
     <string name="github">"گیت هاب: "</string>
     <string name="instagram">"اینستاگرام: "</string>
     <string name="telegram">"تلگرام: "</string>
+    <string name="namePlaceholder">نام</string>
+    <string name="descriptionPlaceholder">توضیحات</string>
 </resources>

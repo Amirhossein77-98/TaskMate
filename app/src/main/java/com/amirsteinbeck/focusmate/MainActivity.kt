@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -21,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            v.setPadding(0, 0, 0, imeInsets.bottom)
             insets
         }
 // Needed Before Using Binding
@@ -67,8 +68,8 @@ class MainActivity : AppCompatActivity() {
 
 // ChatGPT's suggestion of a better and more efficient helper function:
     fun updateTextAndToast(newText: String, toastMessage: String) {
-        binding.textView.text = newText
-        Snackbar.make(binding.root, toastMessage, Toast.LENGTH_SHORT).show()
+//        binding.textView.text = newText
+        Snackbar.make(binding.root, toastMessage, Snackbar.LENGTH_SHORT).show()
     }
 
 // ChatGPT Correction with clearer logic and more efficiency:
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.resetButton.setOnClickListener {
-            binding.textView.text = getString(R.string.helloMessage)
+//            binding.textView.text = getString(R.string.helloMessage)
             binding.nameInput.setText("")
             binding.nameInputLayout.error = null
         }
@@ -116,5 +117,20 @@ class MainActivity : AppCompatActivity() {
         AnimationHelper.applyPressAnimation(this, binding.resetButton)
         AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
         AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
+
+        val items = listOf(
+            User("Amirhossein", "Android Developer"),
+            User("Ermia", "Student"),
+            User("Shima", "Designer"),
+            User("Somayeh", "Mom"),
+            User("Asghar", "Business Owner")
+        )
+
+        val adapter = UserAdapter(items) { clickedUser ->
+            Toast.makeText(this, "Clicked: ${clickedUser.name}", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
     }
 }
