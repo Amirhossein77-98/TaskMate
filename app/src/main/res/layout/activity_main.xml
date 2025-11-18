@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toStartOf="@id/submitButton">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nameInput"
+            android:id="@+id/userInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"

@@ -7,17 +7,17 @@ import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
 
 class TaskAdapter (
     private val tasks: MutableList<Task>,
-    private val onItemClick: (Task) -> Unit
+    private val onItemClick: (Task, Int) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(val binding: ItemTaskBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
 
-            binding.root.setOnClickListener {
-                onItemClick(task)
+            binding.root.setOnLongClickListener {
+                onItemClick(task, bindingAdapterPosition)
+                true
             }
         }
     }
