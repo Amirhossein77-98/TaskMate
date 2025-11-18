@@ -1,6 +1,6 @@
 package com.amirsteinbeck.focusmate
 
-data class User(
-    val name: String,
+data class Task(
+    val title: String,
     val description: String
 )

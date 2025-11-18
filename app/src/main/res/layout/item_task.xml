@@ -32,7 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/taskTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/namePlaceholder"
@@ -43,7 +43,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/userDescription"
+                android:id="@+id/taskDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/descriptionPlaceholder"
@@ -51,7 +51,7 @@
                 android:paddingTop="2dp"
                 app:layout_constraintStart_toEndOf="@id/itemIcon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userName"/>
+                app:layout_constraintTop_toBottomOf="@id/taskTitle"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

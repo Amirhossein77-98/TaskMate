@@ -98,7 +98,7 @@
         app:boxStrokeWidthFocused="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/textChangerButton">
+        app:layout_constraintEnd_toStartOf="@id/submitButton">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInput"
@@ -109,7 +109,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/textChangerButton"
+        android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:paddingHorizontal="15dp"
         android:paddingVertical="15dp"

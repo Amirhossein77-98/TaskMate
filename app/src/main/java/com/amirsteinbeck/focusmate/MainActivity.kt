@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
 // ChatGPT Correction with clearer logic and more efficiency:
         var isHello = true
-        binding.textChangerButton.setOnClickListener {
+        binding.submitButton.setOnClickListener {
             val name = binding.nameInput.text.toString().trim()
             if ((name.length <= 3 && name.isNotEmpty()) || name.length > 30) {
                 binding.nameInputLayout.error = "Please enter a valid name or leave the field blank!"
@@ -113,21 +113,21 @@ class MainActivity : AppCompatActivity() {
             NavigationHelper.goToCredentials(this)
         }
 
-        AnimationHelper.applyPressAnimation(this, binding.textChangerButton)
+        AnimationHelper.applyPressAnimation(this, binding.submitButton)
         AnimationHelper.applyPressAnimation(this, binding.resetButton)
         AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
         AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
 
-        val items = listOf(
-            User("Amirhossein", "Android Developer"),
-            User("Ermia", "Student"),
-            User("Shima", "Designer"),
-            User("Somayeh", "Mom"),
-            User("Asghar", "Business Owner")
+        val items = mutableListOf(
+            Task("Buy Groceries", "Buy groceries from grocery store"),
+            Task("Fix computer", "Computer does not boot up properly"),
+            Task("Send drafts", "Send drafts of the new project to boss"),
+            Task("Watch movie", "Watch a new episode of Mr. Robot"),
+            Task("Call Mom", "Call my mom")
         )
 
-        val adapter = UserAdapter(items) { clickedUser ->
-            Toast.makeText(this, "Clicked: ${clickedUser.name}", Toast.LENGTH_SHORT).show()
+        val adapter = TaskAdapter(items) { clickedTask ->
+            Toast.makeText(this, "Clicked: ${clickedTask.title}", Toast.LENGTH_SHORT).show()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
