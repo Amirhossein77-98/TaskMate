@@ -7,13 +7,13 @@
     android:paddingHorizontal="25dp"
     android:paddingVertical="12dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/obsidianVeil"
         android:paddingHorizontal="2dp"
         android:paddingVertical="15dp"
         app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="?attr/colorSurfaceContainerHighest"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
