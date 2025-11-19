@@ -28,13 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val items = mutableListOf(
-            Task("Buy Groceries", "Buy groceries from grocery store"),
-            Task("Fix computer", "Computer does not boot up properly"),
-            Task("Send drafts", "Send drafts of the new project to boss"),
-            Task("Watch movie", "Watch a new episode of Mr. Robot"),
-            Task("Call Mom", "Call my mom")
-        )
+        val items = StorageHelper.loadTasks(this)
 
         adapter = TaskAdapter(
             items,
@@ -46,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             { clickedTask, position ->
                 Snackbar.make(binding.root, "Removed: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
                 adapter.removeItem(position)
+                StorageHelper.saveTasks(this, items)
             }
             )
 
@@ -123,6 +118,7 @@ class MainActivity : AppCompatActivity() {
 
                 val newTask = Task(title, "New Task")
                 adapter.addItem(newTask)
+                StorageHelper.saveTasks(this, items)
 
                 binding.recyclerView.scrollToPosition(items.size - 1)
                 binding.userInput.setText("")
