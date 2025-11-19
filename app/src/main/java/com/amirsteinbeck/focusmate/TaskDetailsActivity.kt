@@ -1,20 +1,19 @@
 package com.amirsteinbeck.focusmate
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.amirsteinbeck.focusmate.databinding.ActivityGreetBinding
+import com.amirsteinbeck.focusmate.databinding.ActivityTaskDetailsBinding
 
-class GreetActivity : AppCompatActivity() {
+class TaskDetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityGreetBinding
+    private lateinit var binding: ActivityTaskDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGreetBinding.inflate(layoutInflater)
+        binding = ActivityTaskDetailsBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -22,11 +21,18 @@ class GreetActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val name = intent.getStringExtra("USERNAME")
-        binding.greetTextView.text = if (!name.isNullOrEmpty())
-            getString(R.string.welcomeToUser, name)
+        val title = intent.getStringExtra("TASKTITLE")
+        val description = intent.getStringExtra("TASKDESCRIPTION")
+        binding.taskTitle.text = if (!title.isNullOrEmpty())
+            title
         else
-            getString(R.string.welcomeText)
+            getString(R.string.titlePlaceholder)
+
+        binding.taskDescription.text = if (!description.isNullOrEmpty())
+            description
+        else
+            getString(R.string.descriptionPlaceholder)
+
 
         binding.backButton.setOnClickListener {
             NavigationHelper.goBack(this)

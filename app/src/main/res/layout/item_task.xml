@@ -38,7 +38,7 @@
                 android:id="@+id/taskTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/namePlaceholder"
+                android:text="@string/titlePlaceholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/itemIcon"

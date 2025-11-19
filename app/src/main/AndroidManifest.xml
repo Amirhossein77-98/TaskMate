@@ -15,7 +15,7 @@
             android:name=".CredentialsActivity"
             android:exported="false" />
         <activity
-            android:name=".GreetActivity"
+            android:name=".TaskDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

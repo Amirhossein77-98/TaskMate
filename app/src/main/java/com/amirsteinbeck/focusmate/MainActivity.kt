@@ -1,10 +1,8 @@
 package com.amirsteinbeck.focusmate
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,10 +36,18 @@ class MainActivity : AppCompatActivity() {
             Task("Call Mom", "Call my mom")
         )
 
-        adapter = TaskAdapter(items) { clickedTask, position ->
-            Snackbar.make(binding.root, "Chose: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
-            adapter.removeItem(position)
-        }
+        adapter = TaskAdapter(
+            items,
+            { clickedTask, position ->
+                Snackbar.make(binding.root, "Chose: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
+                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
+
+            },
+            { clickedTask, position ->
+                Snackbar.make(binding.root, "Removed: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
+                adapter.removeItem(position)
+            }
+            )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -95,8 +101,8 @@ class MainActivity : AppCompatActivity() {
 //        var isHello = true
         binding.submitButton.setOnClickListener {
             val title = binding.userInput.text.toString().trim()
-            if ((title.length <= 3 && title.isNotEmpty()) || title.length > 30) {
-                binding.nameInputLayout.error = "Please enter a valid name or leave the field blank!"
+            if ((title.length <= 3 && title.isNotEmpty()) || title.length > 30 || title.isEmpty()) {
+                binding.nameInputLayout.error = "Please enter a value!"
                 return@setOnClickListener
             } else {
 //                if (binding.nameInputLayout.error != null) binding.nameInputLayout.error = null
@@ -120,6 +126,10 @@ class MainActivity : AppCompatActivity() {
 
                 binding.recyclerView.scrollToPosition(items.size - 1)
                 binding.userInput.setText("")
+                if (binding.userInput.text != null) {
+                    binding.nameInputLayout.error = null
+                    binding.nameInputLayout.isErrorEnabled = false
+                }
             }
         }
 
@@ -130,8 +140,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.rightPageButtonNavigator.setOnClickListener {
-            val name = binding.userInput.text.toString().trim()
-            NavigationHelper.goToGreet(this, name)
+            NavigationHelper.goToTaskDetails(this,
+                getString(R.string.titlePlaceholder),
+                    getString(R.string.descriptionPlaceholder))
         }
 
         binding.leftPageButtonNavigator.setOnClickListener {

@@ -4,9 +4,10 @@ import android.app.Activity
 import android.content.Intent
 
 object NavigationHelper {
-    fun goToGreet(activity: Activity, name: String) {
-        val intent = Intent(activity, GreetActivity::class.java)
-        intent.putExtra("USERNAME", name)
+    fun goToTaskDetails(activity: Activity, title: String, description: String) {
+        val intent = Intent(activity, TaskDetailsActivity::class.java)
+        intent.putExtra("TASKTITLE", title)
+        intent.putExtra("TASKDESCRIPTION", description)
         activity.startActivity(intent)
 //        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
