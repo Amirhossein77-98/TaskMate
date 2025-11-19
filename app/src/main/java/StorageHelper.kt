@@ -24,4 +24,9 @@ object StorageHelper {
         val type = object : TypeToken<MutableList<Task>>() {}.type
         return Gson().fromJson(json, type)
     }
+
+    fun clearTasks(context: Context) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().remove(KEY_TASKS).apply()
+    }
 }

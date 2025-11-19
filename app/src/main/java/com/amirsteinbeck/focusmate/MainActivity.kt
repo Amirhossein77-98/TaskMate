@@ -148,6 +148,10 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = getString(R.string.helloMessage)
             binding.userInput.setText("")
             binding.nameInputLayout.error = null
+            binding.nameInputLayout.isErrorEnabled = false
+            adapter.clearTasks()
+            StorageHelper.saveTasks(this, items)
+            updateEmptyView()
         }
 
         binding.rightPageButtonNavigator.setOnClickListener {

@@ -38,8 +38,8 @@ class TaskAdapter (
         holder.bind(tasks[position])
     }
 
-    fun addItem(user: Task) {
-        tasks.add(user)
+    fun addItem(task: Task) {
+        tasks.add(task)
         notifyItemInserted(tasks.size - 1)
     }
 
@@ -48,8 +48,13 @@ class TaskAdapter (
         notifyItemRemoved(position)
     }
 
-    fun updateItem(position: Int, user: Task) {
-        tasks[position] = user
+    fun updateItem(position: Int, task: Task) {
+        tasks[position] = task
         notifyItemChanged(position)
+    }
+
+    fun clearTasks() {
+        tasks.clear()
+        notifyDataSetChanged()
     }
 }
