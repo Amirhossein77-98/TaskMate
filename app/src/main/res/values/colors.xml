@@ -7,8 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#880808</color>
+    <color name="red">#7B1818</color>
     <color name="blueGreen">#088F8F</color>
     <color name="transparent">#FFFFFF00</color>
     <color name="obsidianVeil">#d9d9d9</color>
+    <color name="egyptianBlue">#1434A4</color>
+    <color name="teal">#008080</color>
 </resources>
