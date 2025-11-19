@@ -1,5 +1,5 @@
 <resources>
-    <string name="helloMessage">Hi there!</string>
+    <string name="noTasksMessage">No tasks to show here!</string>
     <string name="goodbyeMessage">Bye there!</string>
     <string name="helloToUser">Hello %1$s!</string>
     <string name="goodbyeToUser">Goodbye %1$s!</string>

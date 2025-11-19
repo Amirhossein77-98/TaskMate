@@ -1,6 +1,7 @@
 package com.amirsteinbeck.focusmate
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,8 +28,17 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
         val items = StorageHelper.loadTasks(this)
+
+        fun updateEmptyView() {
+            if (adapter.itemCount == 0) {
+                binding.emptyTasksView.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+            } else {
+                binding.emptyTasksView.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+            }
+        }
 
         adapter = TaskAdapter(
             items,
@@ -41,11 +51,15 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Removed: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
                 adapter.removeItem(position)
                 StorageHelper.saveTasks(this, items)
+                updateEmptyView()
             }
             )
 
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+        updateEmptyView()
+
 // Needed Before Using Binding
 //        val button = findViewById<Button>(R.id.textChangerButton)
 //        val textView = findViewById<TextView>(R.id.textView)
@@ -119,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                 val newTask = Task(title, "New Task")
                 adapter.addItem(newTask)
                 StorageHelper.saveTasks(this, items)
+                updateEmptyView()
 
                 binding.recyclerView.scrollToPosition(items.size - 1)
                 binding.userInput.setText("")

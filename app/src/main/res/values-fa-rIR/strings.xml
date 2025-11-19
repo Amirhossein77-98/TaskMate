@@ -3,6 +3,7 @@
     <string name="goodbyeToUser">خدافظ %1s!</string>
     <string name="app_name">رفیق تمرکز</string>
     <string name="helloMessage">سلام جان!</string>
+    <string name="noTasksMessage">وظیفه ای برای نمایش در اینجا وجود ندارد!</string>
     <string name="goodbyeMessage">خدافظ جان!</string>
     <string name="helloToUser">سلام %1s!</string>
     <string name="click">کلیک</string>
