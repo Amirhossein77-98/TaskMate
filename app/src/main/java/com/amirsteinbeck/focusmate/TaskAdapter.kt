@@ -43,6 +43,11 @@ class TaskAdapter (
         notifyItemInserted(tasks.size - 1)
     }
 
+    fun addItemAt(position: Int,task: Task) {
+        tasks.add(position, task)
+        notifyItemInserted(tasks.size - 1)
+    }
+
     fun removeItem(position: Int) {
         tasks.removeAt(position)
         notifyItemRemoved(position)

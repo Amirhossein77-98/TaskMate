@@ -6,9 +6,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +44,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fun showEditBottomSheet(task: Task, position: Int) {
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.bottomsheet_edit_task, null)
+
+            val titleInput = view.findViewById<TextInputEditText>(R.id.editTitle)
+            val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
+            val saveButton = view.findViewById<View>(R.id.saveButton)
+
+            titleInput.setText(task.title)
+            descInput.setText(task.description)
+
+            saveButton.setOnClickListener {
+                val newTitle = titleInput.text.toString().trim()
+                val newDesc = descInput.text.toString().trim()
+
+                val updatedTask = Task(newTitle, newDesc)
+
+                adapter.updateItem(position, updatedTask)
+                StorageHelper.saveTasks(this, items)
+
+                dialog.dismiss()
+            }
+
+            dialog.setContentView(view)
+            dialog.show()
+
+        }
+
         adapter = TaskAdapter(
             items,
             { clickedTask, position ->
@@ -47,13 +79,32 @@ class MainActivity : AppCompatActivity() {
                 NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
             },
-            { clickedTask, position ->
-                Snackbar.make(binding.root, "Removed: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
-                adapter.removeItem(position)
-                StorageHelper.saveTasks(this, items)
-                updateEmptyView()
-            }
+            { clickedTask, position -> showEditBottomSheet(clickedTask, position) }
             )
+
+        val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                val removedTask = items[position]
+                adapter.removeItem(position)
+                StorageHelper.saveTasks(this@MainActivity, items)
+                updateEmptyView()
+
+                Snackbar.make(binding.root, "Task (${removedTask.title}) Removed", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") {
+                        adapter.addItemAt(position, removedTask)
+                        StorageHelper.saveTasks(this@MainActivity, items)
+                        updateEmptyView()
+                    }.show()
+            }
+        }
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(binding.recyclerView)
 
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

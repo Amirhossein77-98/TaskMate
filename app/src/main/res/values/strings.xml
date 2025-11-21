@@ -22,4 +22,7 @@
     <string name="telegram">Telegram: amirsteinbeck</string>
     <string name="titlePlaceholder">Title</string>
     <string name="descriptionPlaceholder">Description</string>
+    <string name="save">Save</string>
+    <string name="titleTitle">Title:</string>
+    <string name="descTitle">Description: </string>
 </resources>
