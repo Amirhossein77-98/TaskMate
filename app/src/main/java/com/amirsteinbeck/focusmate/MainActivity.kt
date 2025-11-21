@@ -60,76 +60,12 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         updateEmptyView()
 
-// Needed Before Using Binding
-//        val button = findViewById<Button>(R.id.textChangerButton)
-//        val textView = findViewById<TextView>(R.id.textView)
-//        val nameField = findViewById<EditText>(R.id.nameInput)
-//        val resetBtn = findViewById<Button>(R.id.resetButton)
-
-// My Written code, I keep it to compare later for better learning:
-//        button.setOnClickListener {
-//            val goodbyeToUSerText = getString(R.string.goodbyeToUser, nameField.text)
-//            val helloToUSerText = getString(R.string.helloToUser, nameField.text)
-//
-//            if (nameField.text.isNotEmpty()) {
-//                if (textView.text.toString() == getString(R.string.helloMessage)||
-//                    textView.text.toString() == getString(R.string.goodbyeMessage) ||
-//                    textView.text.toString() == goodbyeToUSerText) {
-//                    textView.text = helloToUSerText
-//                } else {
-//                    textView.text = goodbyeToUSerText
-//                }
-//            } else {
-//                if (textView.text == getString(R.string.helloMessage) ||
-//                    textView.text == getString(R.string.helloToUser)) {
-//                    textView.text = getString(R.string.goodbyeMessage)
-//                } else {
-//                    textView.text = getString(R.string.helloMessage)
-//                }
-//            }
-//
-//        }
-
-// My version of helper functions:
-//        fun sayingHello(text: String, toastMessage: String) {
-//            binding.textView.text = text
-//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
-//        }
-//        fun sayingGoodbye(text: String, toastMessage: String) {
-//            binding.textView.text = text
-//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
-//        }
-
-// ChatGPT's suggestion of a better and more efficient helper function:
-//    fun updateTextAndToast(newText: String, toastMessage: String) {
-////        binding.textView.text = newText
-//        Snackbar.make(binding.root, toastMessage, Snackbar.LENGTH_SHORT).show()
-//    }
-
-// ChatGPT Correction with clearer logic and more efficiency:
-//        var isHello = true
         binding.submitButton.setOnClickListener {
             val title = binding.userInput.text.toString().trim()
             if ((title.length <= 3 && title.isNotEmpty()) || title.length > 30 || title.isEmpty()) {
                 binding.nameInputLayout.error = "Please enter a value!"
                 return@setOnClickListener
             } else {
-//                if (binding.nameInputLayout.error != null) binding.nameInputLayout.error = null
-//
-//                val helloToast = getString(R.string.btnGreetingClick)
-//                val goodbyeToast = getString(R.string.btnByeingClick)
-//                val helloText = if (name.isNotEmpty()) getString(R.string.helloToUser, name)
-//                else getString(R.string.helloMessage)
-//                val goodbyeText = if (name.isNotEmpty()) getString(R.string.goodbyeToUser, name)
-//                else getString(R.string.goodbyeMessage)
-//
-//                if (isHello)
-//                    updateTextAndToast(goodbyeText, goodbyeToast)
-//                else
-//                    updateTextAndToast(helloText, helloToast)
-//
-//                isHello = !isHello
-
                 val newTask = Task(title, "New Task")
                 adapter.addItem(newTask)
                 StorageHelper.saveTasks(this, items)
@@ -145,7 +81,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.resetButton.setOnClickListener {
-//            binding.textView.text = getString(R.string.helloMessage)
             binding.userInput.setText("")
             binding.nameInputLayout.error = null
             binding.nameInputLayout.isErrorEnabled = false
