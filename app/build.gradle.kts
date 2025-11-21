@@ -11,8 +11,8 @@ android {
         applicationId = "com.amirsteinbeck.focusmate"
         minSdk = 29
         targetSdk = 36
-        versionCode = 3
-        versionName = "3.2"
+        versionCode = 4
+        versionName = "4.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
