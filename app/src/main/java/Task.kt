@@ -2,5 +2,6 @@ package com.amirsteinbeck.focusmate
 
 data class Task(
     val title: String,
-    val description: String
+    val description: String,
+    var isDone: Boolean = false
 )

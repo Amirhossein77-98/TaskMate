@@ -2,6 +2,7 @@ package com.amirsteinbeck.focusmate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
 
@@ -13,6 +14,7 @@ class TaskAdapter (
 
     inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
+            binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
 
@@ -23,6 +25,37 @@ class TaskAdapter (
             binding.root.setOnLongClickListener {
                 onItemLongClick(task, bindingAdapterPosition)
                 true
+            }
+
+            binding.taskDone.isChecked = task.isDone
+
+            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
+                task.isDone = isChecked
+                notifyItemChanged(bindingAdapterPosition)
+            }
+
+            if (task.isDone) {
+                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+                binding.taskTitle.alpha = 0.5f
+            } else {
+                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                binding.taskTitle.alpha = 1f
+            }
+
+            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
+                task.isDone = isChecked
+
+                if (isChecked) {
+                    binding.taskTitle.paintFlags =
+                        binding.taskTitle.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+                    binding.taskTitle.alpha = 0.5f
+                } else {
+                    binding.taskTitle.paintFlags =
+                        binding.taskTitle.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    binding.taskTitle.alpha = 1f
+                }
+
+                StorageHelper.saveTasks(binding.root.context, tasks)
             }
         }
     }
