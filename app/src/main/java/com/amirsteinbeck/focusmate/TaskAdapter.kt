@@ -16,13 +16,13 @@ class TaskAdapter (
 
         fun striker() {
             binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            binding.taskDescription.paintFlags = binding.taskTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.taskDescription.paintFlags = binding.taskDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.taskTitle.alpha = 0.5f
             binding.taskDescription.alpha = 0.5f
         }
 
         fun unStriker() {
-            binding.taskTitle.paintFlags = binding.taskDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskDescription.paintFlags = binding.taskDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskTitle.alpha = 1f
             binding.taskDescription.alpha = 1f
