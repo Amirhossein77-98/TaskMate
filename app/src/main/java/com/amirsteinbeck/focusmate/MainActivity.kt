@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        fun showEditBottomSheet(task: Task, position: Int, isEdit: Boolean) {
+        fun openTaskBottomSheet(task: Task? = null, position: Int = -1, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.bottomsheet_edit_task, null)
 
@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity() {
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
             val saveButton = view.findViewById<View>(R.id.saveButton)
 
-            titleInput.setText(task.title)
-            descInput.setText(task.description)
+            if (task == null) titleInput.setText("") else titleInput.setText(task.title)
+            if (task == null) descInput.setText("") else descInput.setText(task.description)
 
             dialog.setOnShowListener {
                 titleInput.requestFocus()
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                 NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
             },
-            { clickedTask, position -> showEditBottomSheet(clickedTask, position, true) }
+            { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
 
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -124,11 +124,11 @@ class MainActivity : AppCompatActivity() {
         updateEmptyView()
 
         binding.submitButton.setOnClickListener {
-            showEditBottomSheet(Task("", ""), -1, false)
+            openTaskBottomSheet(isEdit = false)
         }
 
         binding.userInput.setOnClickListener {
-            showEditBottomSheet(Task("", ""), -1, false)
+            openTaskBottomSheet(isEdit = false)
         }
 
         binding.resetButton.setOnClickListener {
