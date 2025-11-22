@@ -2,7 +2,7 @@ package com.amirsteinbeck.focusmate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.Paint
+import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
 
@@ -13,7 +13,24 @@ class TaskAdapter (
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun striker() {
+            binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.taskDescription.paintFlags = binding.taskTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.taskTitle.alpha = 0.5f
+            binding.taskDescription.alpha = 0.5f
+        }
+
+        fun unStriker() {
+            binding.taskTitle.paintFlags = binding.taskDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.taskDescription.paintFlags = binding.taskDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.taskTitle.alpha = 1f
+            binding.taskDescription.alpha = 1f
+        }
+
         fun bind(task: Task) {
+            binding.taskDone.setOnCheckedChangeListener(null)
+
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
@@ -34,26 +51,12 @@ class TaskAdapter (
                 notifyItemChanged(bindingAdapterPosition)
             }
 
-            if (task.isDone) {
-                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-                binding.taskTitle.alpha = 0.5f
-            } else {
-                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                binding.taskTitle.alpha = 1f
-            }
+            if (task.isDone) striker() else unStriker()
 
             binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
                 task.isDone = isChecked
 
-                if (isChecked) {
-                    binding.taskTitle.paintFlags =
-                        binding.taskTitle.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-                    binding.taskTitle.alpha = 0.5f
-                } else {
-                    binding.taskTitle.paintFlags =
-                        binding.taskTitle.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                    binding.taskTitle.alpha = 1f
-                }
+                if (isChecked) striker() else unStriker()
 
                 StorageHelper.saveTasks(binding.root.context, tasks)
             }
