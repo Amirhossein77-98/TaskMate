@@ -81,7 +81,7 @@ class TaskAdapter (
 
     fun addItemAt(position: Int,task: Task) {
         tasks.add(position, task)
-        notifyItemInserted(tasks.size - 1)
+        notifyItemInserted(position)
     }
 
     fun removeItem(position: Int) {
