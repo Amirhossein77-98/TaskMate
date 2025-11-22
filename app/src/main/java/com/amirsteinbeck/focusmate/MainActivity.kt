@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         fun showEditBottomSheet(task: Task, position: Int, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.bottomsheet_edit_task, null)
-            dialog.setContentView(view)
 
             val titleInput = view.findViewById<TextInputEditText>(R.id.editTitle)
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
