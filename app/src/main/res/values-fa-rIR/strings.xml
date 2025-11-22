@@ -6,7 +6,8 @@
     <string name="goodbyeMessage">خدافظ جان!</string>
     <string name="helloToUser">سلام %1s!</string>
     <string name="click">کلیک</string>
-    <string name="nameInputHint">اسمت رو وارد کن…</string>
+    <string name="titleInputHint">عنوان را وارد کنید...</string>
+    <string name="descriptionInputHint">توضیحات را وارد کنید...</string>
     <string name="btnClick">دکمه کلیک شد!</string>
     <string name="btnGreetingClick">سلام کردن...</string>
     <string name="btnByeingClick">خدافظی کردن</string>
@@ -23,4 +24,9 @@
     <string name="telegram">"تلگرام: "</string>
     <string name="titlePlaceholder">عنوان</string>
     <string name="descriptionPlaceholder">توضیحات</string>
+    <string name="save">ذخیره</string>
+    <string name="titleTitle">عنوان:</string>
+    <string name="descTitle">توضیحات:</string>
+    <string name="newTask">وظیفه جدید</string>
+    <string name="taskEntrance">وظیفه خود را وارد کنید…</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.amirsteinbeck.focusmate
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -44,9 +46,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        fun showEditBottomSheet(task: Task, position: Int) {
+        fun showEditBottomSheet(task: Task, position: Int, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.bottomsheet_edit_task, null)
+            dialog.setContentView(view)
 
             val titleInput = view.findViewById<TextInputEditText>(R.id.editTitle)
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
@@ -55,18 +58,28 @@ class MainActivity : AppCompatActivity() {
             titleInput.setText(task.title)
             descInput.setText(task.description)
 
+            dialog.setOnShowListener {
+                titleInput.requestFocus()
+                titleInput.post {
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(titleInput, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
+
             saveButton.setOnClickListener {
                 val newTitle = titleInput.text.toString().trim()
                 val newDesc = descInput.text.toString().trim()
 
-                val updatedTask = Task(newTitle, newDesc)
+                val theTask = Task(newTitle, newDesc, false)
 
-                adapter.updateItem(position, updatedTask)
+                if (isEdit) adapter.updateItem(position, theTask) else adapter.addItem(theTask)
                 StorageHelper.saveTasks(this, items)
+                binding.recyclerView.scrollToPosition(items.size - 1)
+
 
                 dialog.dismiss()
             }
-
+            updateEmptyView()
             dialog.setContentView(view)
             dialog.show()
 
@@ -79,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
             },
-            { clickedTask, position -> showEditBottomSheet(clickedTask, position) }
+            { clickedTask, position -> showEditBottomSheet(clickedTask, position, true) }
             )
 
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -112,29 +125,17 @@ class MainActivity : AppCompatActivity() {
         updateEmptyView()
 
         binding.submitButton.setOnClickListener {
-            val title = binding.userInput.text.toString().trim()
-            if ((title.length <= 3 && title.isNotEmpty()) || title.length > 30 || title.isEmpty()) {
-                binding.nameInputLayout.error = "Please enter a value!"
-                return@setOnClickListener
-            } else {
-                val newTask = Task(title, "New Task")
-                adapter.addItem(newTask)
-                StorageHelper.saveTasks(this, items)
-                updateEmptyView()
+            showEditBottomSheet(Task("", ""), -1, false)
+        }
 
-                binding.recyclerView.scrollToPosition(items.size - 1)
-                binding.userInput.setText("")
-                if (binding.userInput.text != null) {
-                    binding.nameInputLayout.error = null
-                    binding.nameInputLayout.isErrorEnabled = false
-                }
-            }
+        binding.userInput.setOnClickListener {
+            showEditBottomSheet(Task("", ""), -1, false)
         }
 
         binding.resetButton.setOnClickListener {
             binding.userInput.setText("")
-            binding.nameInputLayout.error = null
-            binding.nameInputLayout.isErrorEnabled = false
+            binding.taskInputLayout.error = null
+            binding.taskInputLayout.isErrorEnabled = false
             adapter.clearTasks()
             StorageHelper.saveTasks(this, items)
             updateEmptyView()

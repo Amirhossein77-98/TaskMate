@@ -24,15 +24,22 @@
             android:paddingHorizontal="20dp"
             android:layout_marginTop="10dp"
             app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp">
+            app:boxCornerRadiusTopStart="20dp"
+            android:focusedByDefault="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="@string/titleInputHint"
+                android:focusedByDefault="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:cursorVisible="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,6 +61,7 @@
             android:paddingHorizontal="20dp"
             android:layout_marginTop="10dp"
             app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
@@ -62,7 +70,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editDescription"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="@string/descriptionInputHint"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

@@ -3,6 +3,7 @@ package com.amirsteinbeck.focusmate
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import androidx.core.content.edit
 
 object StorageHelper {
 
@@ -14,7 +15,7 @@ object StorageHelper {
         val json = gson.toJson(tasks)
 
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putString(KEY_TASKS, json).apply()
+        prefs.edit { putString(KEY_TASKS, json) }
     }
 
     fun loadTasks(context: Context): MutableList<Task> {
