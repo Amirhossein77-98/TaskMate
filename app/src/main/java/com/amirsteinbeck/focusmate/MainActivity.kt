@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.text.capitalize
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,6 +16,7 @@ import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,7 +69,9 @@ class MainActivity : AppCompatActivity() {
 
             saveButton.setOnClickListener {
                 val newTitle = titleInput.text.toString().trim()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                 val newDesc = descInput.text.toString().trim()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
                 val theTask = Task(
                     newTitle,
