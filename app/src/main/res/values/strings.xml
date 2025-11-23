@@ -3,7 +3,7 @@
     <string name="goodbyeMessage">Bye there!</string>
     <string name="helloToUser">Hello %1$s!</string>
     <string name="goodbyeToUser">Goodbye %1$s!</string>
-    <string name="app_name">FocusMate</string>
+    <string name="app_name">TaskMate</string>
     <string name="click">Click</string>
     <string name="titleInputHint">Enter title…</string>
     <string name="descriptionInputHint">Enter description…</string>

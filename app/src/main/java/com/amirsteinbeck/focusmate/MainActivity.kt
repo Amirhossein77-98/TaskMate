@@ -69,7 +69,10 @@ class MainActivity : AppCompatActivity() {
                 val newTitle = titleInput.text.toString().trim()
                 val newDesc = descInput.text.toString().trim()
 
-                val theTask = Task(newTitle, newDesc, false)
+                val theTask = Task(
+                    newTitle,
+                    newDesc.ifEmpty { getString(R.string.newTask) },
+                    false)
 
                 if (isEdit) adapter.updateItem(position, theTask) else adapter.addItem(theTask)
                 StorageHelper.saveTasks(this, items)
@@ -87,7 +90,6 @@ class MainActivity : AppCompatActivity() {
         adapter = TaskAdapter(
             items,
             { clickedTask, position ->
-                Snackbar.make(binding.root, "Chose: ${clickedTask.title}", Snackbar.LENGTH_SHORT).show()
                 NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
             },
