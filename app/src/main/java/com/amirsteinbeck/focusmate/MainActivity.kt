@@ -1,12 +1,13 @@
 package com.amirsteinbeck.focusmate
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.text.capitalize
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -36,7 +37,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val items = StorageHelper.loadTasks(this)
+        val allItems = StorageHelper.loadTasks(this)
+        val items: MutableList<Task> = allItems.filter { !it.isArchived } as MutableList<Task>
 
         fun updateEmptyView() {
             if (adapter.itemCount == 0) {
@@ -94,13 +96,13 @@ class MainActivity : AppCompatActivity() {
         adapter = TaskAdapter(
             items,
             { clickedTask, position ->
-                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
+//                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
             },
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
 
-        val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -122,7 +124,40 @@ class MainActivity : AppCompatActivity() {
                     }.show()
             }
         }
-        ItemTouchHelper(swipeHandler).attachToRecyclerView(binding.recyclerView)
+        ItemTouchHelper(leftSwipeHandler).attachToRecyclerView(binding.recyclerView)
+
+        val rightSwipeHandler = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                val archivedTask = items[position]
+                archivedTask.isArchived = true
+                items.removeAt(position)
+                adapter.notifyItemRemoved(position)
+                allItems.removeAt(position)
+                allItems.add(position, archivedTask)
+                StorageHelper.saveTasks(this@MainActivity, allItems)
+                updateEmptyView()
+
+                Snackbar.make(binding.root, "Task (${archivedTask.title}) archived...", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") {
+                        archivedTask.isArchived = false
+                        items.add(position, archivedTask)
+                        adapter.notifyItemInserted(position)
+                        allItems.removeAt(position)
+                        allItems.add(position, archivedTask)
+                        StorageHelper.saveTasks(this@MainActivity, allItems)
+                        updateEmptyView()
+                    }.show()
+            }
+
+        }
+        ItemTouchHelper(rightSwipeHandler).attachToRecyclerView(binding.recyclerView)
 
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -147,9 +182,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.rightPageButtonNavigator.setOnClickListener {
-            NavigationHelper.goToTaskDetails(this,
-                getString(R.string.titlePlaceholder),
-                    getString(R.string.descriptionPlaceholder))
+            NavigationHelper.goToArchivedTasks(this)
         }
 
         binding.leftPageButtonNavigator.setOnClickListener {

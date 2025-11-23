@@ -15,7 +15,7 @@
             android:name=".CredentialsActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskDetailsActivity"
+            android:name=".ArchivedTasksActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
