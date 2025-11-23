@@ -37,6 +37,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/titleInputHint"
                 android:capitalize="sentences"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:focusedByDefault="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
