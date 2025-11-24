@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
             val saveButton = view.findViewById<View>(R.id.saveButton)
 
-            saveButton.isEnabled = false
+            if (!isEdit) saveButton.isEnabled = false
 
             if (task == null) titleInput.setText("") else titleInput.setText(task.title)
             if (task == null) descInput.setText("") else descInput.setText(task.description)
