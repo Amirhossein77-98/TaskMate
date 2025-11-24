@@ -2,6 +2,7 @@ package com.amirsteinbeck.focusmate
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -9,8 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +22,7 @@ import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.Locale
 
 
@@ -60,6 +64,8 @@ class MainActivity : AppCompatActivity() {
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
             val saveButton = view.findViewById<View>(R.id.saveButton)
 
+            saveButton.isEnabled = false
+
             if (task == null) titleInput.setText("") else titleInput.setText(task.title)
             if (task == null) descInput.setText("") else descInput.setText(task.description)
 
@@ -69,6 +75,10 @@ class MainActivity : AppCompatActivity() {
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(titleInput, InputMethodManager.SHOW_IMPLICIT)
                 }
+            }
+
+            titleInput.addTextChangedListener {
+                saveButton.isEnabled = !it.isNullOrBlank()
             }
 
             saveButton.setOnClickListener {
@@ -112,6 +122,24 @@ class MainActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ) = false
 
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
+                ).addSwipeLeftBackgroundColor(R.color.red)
+                    .addSwipeLeftActionIcon(R.drawable.trash_bin_minimalistic_2_svgrepo_com_24)
+                    .create()
+                    .decorate()
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
                 val removedTask = items[position]
@@ -135,6 +163,24 @@ class MainActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ) = false
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
+                ).addSwipeRightBackgroundColor(R.color.teal)
+                    .addSwipeRightActionIcon(R.drawable.archive_check_svgrepo_com_24)
+                    .create()
+                    .decorate()
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
