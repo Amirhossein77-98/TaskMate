@@ -7,7 +7,6 @@ object NavigationHelper {
     fun goToArchivedTasks(activity: Activity) {
         val intent = Intent(activity, ArchivedTasksActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
 //        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 

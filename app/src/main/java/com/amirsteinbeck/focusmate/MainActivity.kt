@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -13,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.FadeItemAnimator
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -23,13 +25,13 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var adapter: TaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
-        lateinit var adapter: TaskAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
@@ -86,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
+                updateEmptyView()
             }
             updateEmptyView()
             dialog.setContentView(view)
@@ -159,7 +162,7 @@ class MainActivity : AppCompatActivity() {
         }
         ItemTouchHelper(rightSwipeHandler).attachToRecyclerView(binding.recyclerView)
 
-
+        binding.recyclerView.itemAnimator = FadeItemAnimator()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
         updateEmptyView()
@@ -193,5 +196,14 @@ class MainActivity : AppCompatActivity() {
         AnimationHelper.applyPressAnimation(this, binding.resetButton)
         AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
         AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val allItems = StorageHelper.loadTasks(this)
+        val items = allItems.filter { !it.isArchived }.toMutableList()
+
+        adapter.updateData(items)
     }
 }

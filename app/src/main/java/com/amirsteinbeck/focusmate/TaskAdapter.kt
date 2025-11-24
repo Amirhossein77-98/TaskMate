@@ -1,5 +1,6 @@
 package com.amirsteinbeck.focusmate
 
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
@@ -44,6 +45,10 @@ class TaskAdapter (
                 true
             }
 
+            val scaleUpX = ObjectAnimator.ofFloat(binding.taskDone, "scaleX", 0.8f, 1.05f, 1f)
+            val scaleUpY = ObjectAnimator.ofFloat(binding.taskDone, "scaleY", 0.8f, 1.05f, 1f)
+            scaleUpX.duration = 150
+            scaleUpY.duration = 150
             binding.taskDone.isChecked = task.isDone
 
             binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
@@ -55,6 +60,9 @@ class TaskAdapter (
 
             binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
                 task.isDone = isChecked
+
+                scaleUpX.start()
+                scaleUpY.start()
 
                 if (isChecked) striker() else unStriker()
 
@@ -71,6 +79,8 @@ class TaskAdapter (
     override fun getItemCount() = tasks.size
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.itemView.alpha = 0f
+        holder.itemView.animate().alpha(1f).setDuration(150).start()
         holder.bind(tasks[position])
     }
 
@@ -96,6 +106,12 @@ class TaskAdapter (
 
     fun clearTasks() {
         tasks.clear()
+        notifyDataSetChanged()
+    }
+
+    fun updateData(newList: MutableList<Task>) {
+        tasks.clear()
+        tasks.addAll(newList)
         notifyDataSetChanged()
     }
 }
