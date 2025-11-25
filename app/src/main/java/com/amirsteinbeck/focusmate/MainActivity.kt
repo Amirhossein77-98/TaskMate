@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var fullList: MutableList<Task>
-    private lateinit var displayList: MutableList<Task>
+    lateinit var fullList: MutableList<Task>
+    lateinit var displayList: MutableList<Task>
 
     private lateinit var adapter: TaskAdapter
 
@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
+                adapter.sortTasks()
                 updateEmptyView()
             }
             updateEmptyView()
@@ -258,8 +259,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val fullList = StorageHelper.loadTasks(this)
-        val displayList = fullList.filter { !it.isArchived }.toMutableList()
+        fullList = StorageHelper.loadTasks(this)
+        displayList = fullList.filter { !it.isArchived }.toMutableList()
 
         adapter.updateData(displayList)
     }

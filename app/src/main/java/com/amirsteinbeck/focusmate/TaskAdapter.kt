@@ -53,6 +53,7 @@ class TaskAdapter (
 
             binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
                 task.isDone = isChecked
+                sortTasks()
                 notifyItemChanged(bindingAdapterPosition)
             }
 
@@ -67,6 +68,7 @@ class TaskAdapter (
                 if (isChecked) striker() else unStriker()
 
                 StorageHelper.saveTasks(binding.root.context, tasks)
+                sortTasks()
             }
         }
     }
@@ -112,6 +114,13 @@ class TaskAdapter (
     fun updateData(newList: MutableList<Task>) {
         tasks.clear()
         tasks.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    fun sortTasks() {
+        tasks.sortWith(
+            compareBy<Task> { it.isDone }
+        )
         notifyDataSetChanged()
     }
 }
