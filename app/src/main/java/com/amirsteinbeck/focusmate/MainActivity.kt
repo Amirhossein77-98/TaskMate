@@ -29,7 +29,11 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var adapter: TaskAdapter
+
+    private lateinit var fullList: MutableList<Task>
+    private lateinit var displayList: MutableList<Task>
+
+    private lateinit var adapter: TaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +47,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val allItems = StorageHelper.loadTasks(this)
-        val items: MutableList<Task> = allItems.filter { !it.isArchived } as MutableList<Task>
+        fullList = StorageHelper.loadTasks(this)
+        displayList = fullList.filter { !it.isArchived }.toMutableList()
 
         fun updateEmptyView() {
             if (adapter.itemCount == 0) {
@@ -93,8 +97,8 @@ class MainActivity : AppCompatActivity() {
                     false)
 
                 if (isEdit) adapter.updateItem(position, theTask) else adapter.addItem(theTask)
-                StorageHelper.saveTasks(this, items)
-                binding.recyclerView.scrollToPosition(items.size - 1)
+                StorageHelper.saveTasks(this, displayList)
+                binding.recyclerView.scrollToPosition(displayList.size - 1)
 
 
                 dialog.dismiss()
@@ -107,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter = TaskAdapter(
-            items,
+            displayList,
             { clickedTask, position ->
 //                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
@@ -138,19 +142,20 @@ class MainActivity : AppCompatActivity() {
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                updateEmptyView()
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                val removedTask = items[position]
+                val removedTask = displayList[position]
                 adapter.removeItem(position)
-                StorageHelper.saveTasks(this@MainActivity, items)
+                StorageHelper.saveTasks(this@MainActivity, displayList)
                 updateEmptyView()
 
                 Snackbar.make(binding.root, "Task (${removedTask.title}) Removed", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         adapter.addItemAt(position, removedTask)
-                        StorageHelper.saveTasks(this@MainActivity, items)
+                        StorageHelper.saveTasks(this@MainActivity, displayList)
                         updateEmptyView()
                     }.show()
             }
@@ -180,31 +185,37 @@ class MainActivity : AppCompatActivity() {
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                updateEmptyView()
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                val archivedTask = items[position]
+                val archivedTask = displayList[position]
                 archivedTask.isArchived = true
-                items.removeAt(position)
+
+                val indexInFullList = fullList.indexOfFirst { it.id == archivedTask.id }
+                if (indexInFullList != -1) {
+                    fullList[indexInFullList] = archivedTask
+                    StorageHelper.saveTasks(this@MainActivity, fullList)
+                }
+
+                displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
-                allItems.removeAt(position)
-                allItems.add(position, archivedTask)
-                StorageHelper.saveTasks(this@MainActivity, allItems)
                 updateEmptyView()
 
-                Snackbar.make(binding.root, "Task (${archivedTask.title}) archived...", Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, "Archived: ${archivedTask.title}...", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         archivedTask.isArchived = false
-                        items.add(position, archivedTask)
+
+                        if (indexInFullList != -1) {
+                            fullList[indexInFullList] = archivedTask
+                            StorageHelper.saveTasks(this@MainActivity, fullList)
+                        }
+                        displayList.add(position, archivedTask)
                         adapter.notifyItemInserted(position)
-                        allItems.removeAt(position)
-                        allItems.add(position, archivedTask)
-                        StorageHelper.saveTasks(this@MainActivity, allItems)
                         updateEmptyView()
                     }.show()
             }
-
         }
         ItemTouchHelper(rightSwipeHandler).attachToRecyclerView(binding.recyclerView)
 
@@ -226,7 +237,7 @@ class MainActivity : AppCompatActivity() {
             binding.taskInputLayout.error = null
             binding.taskInputLayout.isErrorEnabled = false
             adapter.clearTasks()
-            StorageHelper.saveTasks(this, items)
+            StorageHelper.saveTasks(this, displayList)
             updateEmptyView()
         }
 
@@ -247,9 +258,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val allItems = StorageHelper.loadTasks(this)
-        val items = allItems.filter { !it.isArchived }.toMutableList()
+        val fullList = StorageHelper.loadTasks(this)
+        val displayList = fullList.filter { !it.isArchived }.toMutableList()
 
-        adapter.updateData(items)
+        adapter.updateData(displayList)
     }
 }

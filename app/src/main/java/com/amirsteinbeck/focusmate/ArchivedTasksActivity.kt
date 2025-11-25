@@ -15,6 +15,8 @@ import com.amirsteinbeck.focusmate.databinding.ActivityArchivedTasksBinding
 class ArchivedTasksActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArchivedTasksBinding
+    private lateinit var fullList: MutableList<Task>
+    private lateinit var displayList: MutableList<Task>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +32,8 @@ class ArchivedTasksActivity : AppCompatActivity() {
 
 
 
-        val allItems = StorageHelper.loadTasks(this)
-        val items: MutableList<Task> = allItems.filter { it.isArchived } as MutableList<Task>
+        fullList = StorageHelper.loadTasks(this)
+       displayList = fullList.filter { it.isArchived } as MutableList<Task>
 
         fun updateEmptyView() {
             if (adapter.itemCount == 0) {
@@ -44,7 +46,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
         }
 
         adapter = TaskAdapter(
-            items,
+            displayList,
             { clickedTask, position ->},
             {clickedTask, position ->}
         )
@@ -58,23 +60,30 @@ class ArchivedTasksActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                val unArchivedTask = items[position]
+                val unArchivedTask = displayList[position]
                 unArchivedTask.isArchived = false
-                items.removeAt(position)
+
+                val fullListIndex = fullList.indexOfFirst { it.id == unArchivedTask.id }
+                if (fullListIndex != -1) {
+                    fullList[fullListIndex] = unArchivedTask
+                    StorageHelper.saveTasks(this@ArchivedTasksActivity, fullList)
+                }
+
+                displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
-                allItems.removeAt(position)
-                allItems.add(position, unArchivedTask)
-                StorageHelper.saveTasks(this@ArchivedTasksActivity, allItems)
                 updateEmptyView()
 
                 Snackbar.make(binding.root, "Task (${unArchivedTask.title}) unarchived!", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         unArchivedTask.isArchived = true
-                        items.add(position, unArchivedTask)
+
+                        if (fullListIndex != -1) {
+                            fullList[fullListIndex] = unArchivedTask
+                            StorageHelper.saveTasks(this@ArchivedTasksActivity, fullList)
+                        }
+
+                        displayList.add(position, unArchivedTask)
                         adapter.notifyItemInserted(position)
-                        allItems.removeAt(position)
-                        allItems.add(position, unArchivedTask)
-                        StorageHelper.saveTasks(this@ArchivedTasksActivity, allItems)
                         updateEmptyView()
                     }.show()
             }
