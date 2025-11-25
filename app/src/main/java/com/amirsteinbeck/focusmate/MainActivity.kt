@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
+                updateEmptyView()
                 adapter.sortTasks()
             }
             updateEmptyView()
@@ -164,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                 fullList.removeAt(indexOfRemovedTaskInFullList)
                 StorageHelper.saveTasks(this@MainActivity, fullList)
                 updateEmptyView()
-                adapter.sortTasks()
+                if (fullList.size > 1) adapter.sortTasks()
 
                 Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {
@@ -227,7 +228,7 @@ class MainActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
-                adapter.sortTasks()
+                if (fullList.size > 1) adapter.sortTasks()
 
                 Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {

@@ -79,7 +79,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
                     .setSwipeLeftActionIconTint(
                         ContextCompat.getColor(this@ArchivedTasksActivity, R.color.white)
                     )
-                    .addSwipeLeftLabel("Unarchive")
+                    .addSwipeLeftLabel(getString(R.string.unarchive))
                     .setSwipeLeftLabelColor(
                         ContextCompat.getColor(this@ArchivedTasksActivity, R.color.white)
                     )
@@ -103,10 +103,10 @@ class ArchivedTasksActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
-                adapter.sortTasks()
+                if (fullList.size > 1) adapter.sortTasks()
 
-                Snackbar.make(binding.root, "Task (${unArchivedTask.title}) unarchived!", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") {
+                Snackbar.make(binding.root, getString(R.string.unarchiveSnackbarMessage, unArchivedTask.title), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo)) {
                         unArchivedTask.isArchived = true
 
                         if (fullListIndex != -1) {
