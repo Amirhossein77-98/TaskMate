@@ -1,9 +1,11 @@
 package com.amirsteinbeck.focusmate
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ActivityArchivedTasksBinding
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ArchivedTasksActivity : AppCompatActivity() {
 
@@ -57,6 +60,34 @@ class ArchivedTasksActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ) = false
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
+                ).addSwipeLeftBackgroundColor(
+                    ContextCompat.getColor(this@ArchivedTasksActivity, R.color.purple_200)
+                )
+                    .addSwipeLeftActionIcon(R.drawable.unarchive_svgrepo_com)
+                    .setSwipeLeftActionIconTint(
+                        ContextCompat.getColor(this@ArchivedTasksActivity, R.color.white)
+                    )
+                    .addSwipeLeftLabel("Unarchive")
+                    .setSwipeLeftLabelColor(
+                        ContextCompat.getColor(this@ArchivedTasksActivity, R.color.white)
+                    )
+                    .create()
+                    .decorate()
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                updateEmptyView()
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition

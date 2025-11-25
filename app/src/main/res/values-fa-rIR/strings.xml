@@ -29,4 +29,11 @@
     <string name="descTitle">توضیحات:</string>
     <string name="newTask">وظیفه جدید</string>
     <string name="taskEntrance">وظیفه خود را وارد کنید…</string>
+    <string name="archive">آرشیو</string>
+    <string name="delete">حذف</string>
+    <string name="unarchive">خروج از آرشیو</string>
+    <string name="removeSnackbarMessage">%1$s حذف شد…</string>
+    <string name="archiveSnackbarMessage">%1$s آرشیو شد…</string>
+    <string name="unarchiveSnackbarMessage">%1$s از آرشیو خارج شد…</string>
+    <string name="undo">بازگشت</string>
 </resources>

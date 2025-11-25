@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
@@ -138,8 +139,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 RecyclerViewSwipeDecorator.Builder(
                     c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeLeftBackgroundColor(R.color.red)
+                ).addSwipeLeftBackgroundColor(
+                    ContextCompat.getColor(this@MainActivity, R.color.red)
+                )
                     .addSwipeLeftActionIcon(R.drawable.trash_bin_minimalistic_2_svgrepo_com_24)
+                    .setSwipeLeftActionIconTint(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
+                    .addSwipeLeftLabel(getString(R.string.delete))
+                    .setSwipeLeftLabelColor(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -156,8 +166,8 @@ class MainActivity : AppCompatActivity() {
                 updateEmptyView()
                 adapter.sortTasks()
 
-                Snackbar.make(binding.root, "Removed ${removedTask.title}...", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") {
+                Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo)) {
                         adapter.addItemAt(position, removedTask)
                         fullList.add(indexOfRemovedTaskInFullList, removedTask)
                         StorageHelper.saveTasks(this@MainActivity, fullList)
@@ -186,8 +196,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 RecyclerViewSwipeDecorator.Builder(
                     c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeRightBackgroundColor(R.color.teal)
+                ).addSwipeRightBackgroundColor(
+                    ContextCompat.getColor(this@MainActivity, R.color.teal)
+                )
                     .addSwipeRightActionIcon(R.drawable.archive_check_svgrepo_com_24)
+                    .setSwipeRightActionIconTint(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
+                    .addSwipeRightLabel(getString(R.string.archive))
+                    .setSwipeRightLabelColor(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -210,8 +229,8 @@ class MainActivity : AppCompatActivity() {
                 updateEmptyView()
                 adapter.sortTasks()
 
-                Snackbar.make(binding.root, "Archived: ${archivedTask.title}...", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") {
+                Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo)) {
                         archivedTask.isArchived = false
 
                         if (indexInFullList != -1) {
