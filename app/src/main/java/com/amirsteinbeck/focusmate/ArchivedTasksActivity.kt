@@ -31,9 +31,8 @@ class ArchivedTasksActivity : AppCompatActivity() {
         }
 
 
-
         fullList = StorageHelper.loadTasks(this)
-       displayList = fullList.filter { it.isArchived } as MutableList<Task>
+        displayList = fullList.filter { it.isArchived } as MutableList<Task>
 
         fun updateEmptyView() {
             if (adapter.itemCount == 0) {
@@ -50,6 +49,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
             { clickedTask, position ->},
             {clickedTask, position ->}
         )
+        adapter.sortTasks()
 
         val leftSwipeHelper = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -72,6 +72,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
+                adapter.sortTasks()
 
                 Snackbar.make(binding.root, "Task (${unArchivedTask.title}) unarchived!", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
@@ -85,6 +86,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
                         displayList.add(position, unArchivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
+                        adapter.sortTasks()
                     }.show()
             }
         }

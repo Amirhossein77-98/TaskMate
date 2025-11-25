@@ -102,12 +102,11 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
-                updateEmptyView()
+                adapter.sortTasks()
             }
             updateEmptyView()
             dialog.setContentView(view)
             dialog.show()
-
         }
 
         adapter = TaskAdapter(
@@ -118,6 +117,8 @@ class MainActivity : AppCompatActivity() {
             },
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
+
+        adapter.sortTasks()
 
         val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -149,14 +150,19 @@ class MainActivity : AppCompatActivity() {
                 val position = viewHolder.bindingAdapterPosition
                 val removedTask = displayList[position]
                 adapter.removeItem(position)
-                StorageHelper.saveTasks(this@MainActivity, displayList)
+                val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
+                fullList.removeAt(indexOfRemovedTaskInFullList)
+                StorageHelper.saveTasks(this@MainActivity, fullList)
                 updateEmptyView()
+                adapter.sortTasks()
 
-                Snackbar.make(binding.root, "Task (${removedTask.title}) Removed", Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, "Removed ${removedTask.title}...", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         adapter.addItemAt(position, removedTask)
-                        StorageHelper.saveTasks(this@MainActivity, displayList)
+                        fullList.add(indexOfRemovedTaskInFullList, removedTask)
+                        StorageHelper.saveTasks(this@MainActivity, fullList)
                         updateEmptyView()
+                        adapter.sortTasks()
                     }.show()
             }
         }
@@ -202,6 +208,7 @@ class MainActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
+                adapter.sortTasks()
 
                 Snackbar.make(binding.root, "Archived: ${archivedTask.title}...", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
@@ -214,6 +221,7 @@ class MainActivity : AppCompatActivity() {
                         displayList.add(position, archivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
+                        adapter.sortTasks()
                     }.show()
             }
         }
@@ -261,6 +269,7 @@ class MainActivity : AppCompatActivity() {
         val fullList = StorageHelper.loadTasks(this)
         val displayList = fullList.filter { !it.isArchived }.toMutableList()
 
+        adapter.sortTasks()
         adapter.updateData(displayList)
     }
 }
