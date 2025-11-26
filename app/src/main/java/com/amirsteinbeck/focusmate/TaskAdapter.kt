@@ -4,8 +4,11 @@ import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
+import android.icu.text.SimpleDateFormat
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
+import java.util.Date
+import java.util.Locale
 
 class TaskAdapter (
     private val tasks: MutableList<Task>,
@@ -35,6 +38,13 @@ class TaskAdapter (
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
+            val date = Date(task.id)
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val formattedDate = dateFormatter.format(date)
+            val formattedTime = timeFormatter.format(date)
+            binding.taskAddedDate.text = binding.root.context.getString(R.string.dateAdded, formattedDate.toString())
+            binding.taskAddedTime.text = binding.root.context.getString(R.string.timeAdded, formattedTime.toString())
 
             binding.root.setOnClickListener {
                 onItemShortClick(task, bindingAdapterPosition)

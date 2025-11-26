@@ -35,4 +35,8 @@
     <string name="archiveSnackbarMessage">Archived %1$s…</string>
     <string name="unarchiveSnackbarMessage">Unarchived %1$s…</string>
     <string name="undo">Undo</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="dateAdded">Date Added: %1$s</string>
+    <string name="timeAdded">Time Added: %1$s</string>
 </resources>
