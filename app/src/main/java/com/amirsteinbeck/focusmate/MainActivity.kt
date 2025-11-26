@@ -36,6 +36,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: TaskAdapter
 
+    fun updateLists() {
+        val fullList = StorageHelper.loadTasks(this)
+        val displayList = fullList.filter { !it.isArchived }.toMutableList()
+
+        adapter.sortTasks()
+        adapter.updateData(displayList)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -60,6 +68,8 @@ class MainActivity : AppCompatActivity() {
                 binding.recyclerView.visibility = View.VISIBLE
             }
         }
+
+
 
         fun openTaskBottomSheet(task: Task? = null, position: Int = -1, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
@@ -103,6 +113,8 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
+                updateLists()
+                fullList.add(theTask)
                 updateEmptyView()
                 adapter.sortTasks()
             }
@@ -160,20 +172,23 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
                 val removedTask = displayList[position]
-                adapter.removeItem(position)
+                displayList.removeAt(position)
+                adapter.notifyItemRemoved(position)
                 val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
-                fullList.removeAt(indexOfRemovedTaskInFullList)
+                if (indexOfRemovedTaskInFullList != -1) fullList.removeAt(indexOfRemovedTaskInFullList)
                 StorageHelper.saveTasks(this@MainActivity, fullList)
-                updateEmptyView()
                 if (fullList.size > 1) adapter.sortTasks()
+                updateEmptyView()
 
                 Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {
-                        adapter.addItemAt(position, removedTask)
+                        displayList.add(position, removedTask)
+                        adapter.notifyItemInserted(position)
                         fullList.add(indexOfRemovedTaskInFullList, removedTask)
                         StorageHelper.saveTasks(this@MainActivity, fullList)
-                        updateEmptyView()
                         adapter.sortTasks()
+                        updateEmptyView()
+
                     }.show()
             }
         }
@@ -286,10 +301,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val fullList = StorageHelper.loadTasks(this)
-        val displayList = fullList.filter { !it.isArchived }.toMutableList()
-
-        adapter.sortTasks()
-        adapter.updateData(displayList)
+        updateLists()
     }
 }
