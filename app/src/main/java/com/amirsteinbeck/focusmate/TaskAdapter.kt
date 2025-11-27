@@ -4,8 +4,11 @@ import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
+import android.icu.text.SimpleDateFormat
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
+import java.util.Date
+import java.util.Locale
 
 class TaskAdapter (
     private val tasks: MutableList<Task>,
@@ -32,9 +35,41 @@ class TaskAdapter (
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
 
+            val todayDateMillis = System.currentTimeMillis()
+            val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
+            val monthFormatter = SimpleDateFormat("MM", Locale.getDefault())
+            val todayDate = dayFormatter.format(todayDateMillis)
+            val todayMonth = monthFormatter.format(todayDateMillis)
+
+
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
+            val date = Date(task.id)
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val formattedDate = dateFormatter.format(date)
+            val formattedTime = timeFormatter.format(date)
+            val taskDate = dayFormatter.format(date)
+            val taskMonth = monthFormatter.format(date)
+
+            if (taskMonth == todayMonth) {
+                if ((todayDate.toInt() - taskDate.toInt()) != 0) {
+                    if ((todayDate.toInt() - taskDate.toInt()) == 1) {
+                        binding.taskAddedDate.text = "Yesterday at $formattedTime"
+                    } else if (todayDate.toInt() - taskDate.toInt() in 2..7) {
+                        binding.taskAddedDate.text = "This Week"
+                    }
+                } else {
+                    binding.taskAddedDate.text = "Today at $formattedTime"
+                }
+            } else {
+                binding.taskAddedDate.text = "Old task from $formattedDate"
+            }
+
+
+//            binding.taskAddedDate.text = binding.root.context.getString(R.string.dateAdded, formattedDate.toString())
+//            binding.taskAddedTime.text = binding.root.context.getString(R.string.timeAdded, formattedTime.toString())
 
             binding.root.setOnClickListener {
                 onItemShortClick(task, bindingAdapterPosition)
@@ -67,6 +102,7 @@ class TaskAdapter (
 
                 if (isChecked) striker() else unStriker()
 
+                sortTasks()
                 StorageHelper.saveTasks(binding.root.context, tasks)
                 sortTasks()
             }

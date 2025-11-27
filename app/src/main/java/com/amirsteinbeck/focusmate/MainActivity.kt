@@ -1,16 +1,13 @@
 package com.amirsteinbeck.focusmate
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
@@ -30,10 +27,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var fullList: MutableList<Task>
-    lateinit var displayList: MutableList<Task>
+    private lateinit var fullList: MutableList<Task>
+    private lateinit var displayList: MutableList<Task>
 
     private lateinit var adapter: TaskAdapter
+
+    fun updateLists() {
+        val fullList = StorageHelper.loadTasks(this)
+        val displayList = fullList.filter { !it.isArchived }.toMutableList()
+
+        adapter.sortTasks()
+        adapter.updateData(displayList)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 binding.recyclerView.visibility = View.VISIBLE
             }
         }
+
+
 
         fun openTaskBottomSheet(task: Task? = null, position: Int = -1, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
@@ -102,13 +109,14 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
-                adapter.sortTasks()
+                updateLists()
+                fullList.add(theTask)
                 updateEmptyView()
+                adapter.sortTasks()
             }
             updateEmptyView()
             dialog.setContentView(view)
             dialog.show()
-
         }
 
         adapter = TaskAdapter(
@@ -119,6 +127,8 @@ class MainActivity : AppCompatActivity() {
             },
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
+
+        adapter.sortTasks()
 
         val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -138,8 +148,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 RecyclerViewSwipeDecorator.Builder(
                     c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeLeftBackgroundColor(R.color.red)
+                ).addSwipeLeftBackgroundColor(
+                    ContextCompat.getColor(this@MainActivity, R.color.red)
+                )
                     .addSwipeLeftActionIcon(R.drawable.trash_bin_minimalistic_2_svgrepo_com_24)
+                    .setSwipeLeftActionIconTint(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
+                    .addSwipeLeftLabel(getString(R.string.delete))
+                    .setSwipeLeftLabelColor(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -149,15 +168,23 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
                 val removedTask = displayList[position]
-                adapter.removeItem(position)
-                StorageHelper.saveTasks(this@MainActivity, displayList)
+                displayList.removeAt(position)
+                adapter.notifyItemRemoved(position)
+                val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
+                if (indexOfRemovedTaskInFullList != -1) fullList.removeAt(indexOfRemovedTaskInFullList)
+                StorageHelper.saveTasks(this@MainActivity, fullList)
+                if (fullList.size > 1) adapter.sortTasks()
                 updateEmptyView()
 
-                Snackbar.make(binding.root, "Task (${removedTask.title}) Removed", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") {
-                        adapter.addItemAt(position, removedTask)
-                        StorageHelper.saveTasks(this@MainActivity, displayList)
+                Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo)) {
+                        displayList.add(position, removedTask)
+                        adapter.notifyItemInserted(position)
+                        fullList.add(indexOfRemovedTaskInFullList, removedTask)
+                        StorageHelper.saveTasks(this@MainActivity, fullList)
+                        adapter.sortTasks()
                         updateEmptyView()
+
                     }.show()
             }
         }
@@ -181,8 +208,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 RecyclerViewSwipeDecorator.Builder(
                     c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeRightBackgroundColor(R.color.teal)
+                ).addSwipeRightBackgroundColor(
+                    ContextCompat.getColor(this@MainActivity, R.color.teal)
+                )
                     .addSwipeRightActionIcon(R.drawable.archive_check_svgrepo_com_24)
+                    .setSwipeRightActionIconTint(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
+                    .addSwipeRightLabel(getString(R.string.archive))
+                    .setSwipeRightLabelColor(
+                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    )
                     .create()
                     .decorate()
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -203,9 +239,10 @@ class MainActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
+                if (fullList.size > 1) adapter.sortTasks()
 
-                Snackbar.make(binding.root, "Archived: ${archivedTask.title}...", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") {
+                Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo)) {
                         archivedTask.isArchived = false
 
                         if (indexInFullList != -1) {
@@ -215,6 +252,7 @@ class MainActivity : AppCompatActivity() {
                         displayList.add(position, archivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
+                        adapter.sortTasks()
                     }.show()
             }
         }
@@ -259,9 +297,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        fullList = StorageHelper.loadTasks(this)
-        displayList = fullList.filter { !it.isArchived }.toMutableList()
-
-        adapter.updateData(displayList)
+        updateLists()
     }
 }

@@ -28,4 +28,15 @@
     <string name="descTitle">Description: </string>
     <string name="newTask">New Task</string>
     <string name="taskEntrance">Enter your task…</string>
+    <string name="archive">Archive</string>
+    <string name="delete">Delete</string>
+    <string name="unarchive">Unarchive</string>
+    <string name="removeSnackbarMessage">Removed %1$s…</string>
+    <string name="archiveSnackbarMessage">Archived %1$s…</string>
+    <string name="unarchiveSnackbarMessage">Unarchived %1$s…</string>
+    <string name="undo">Undo</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="dateAdded">Date Added: %1$s</string>
+    <string name="timeAdded">Time Added: %1$s</string>
 </resources>
