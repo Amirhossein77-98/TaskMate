@@ -56,15 +56,15 @@ class TaskAdapter (
             if (taskMonth == todayMonth) {
                 if ((todayDate.toInt() - taskDate.toInt()) != 0) {
                     if ((todayDate.toInt() - taskDate.toInt()) == 1) {
-                        binding.taskAddedDate.text = "Yesterday at $formattedTime"
+                        binding.taskAddedDate.text = binding.root.context.getString(R.string.yesterdayTimestamp, formattedTime)
                     } else if (todayDate.toInt() - taskDate.toInt() in 2..7) {
-                        binding.taskAddedDate.text = "This Week"
+                        binding.taskAddedDate.text = binding.root.context.getString(R.string.thisWeekTimestampt)
                     }
                 } else {
-                    binding.taskAddedDate.text = "Today at $formattedTime"
+                    binding.taskAddedDate.text = binding.root.context.getString(R.string.todayTimestamp, formattedTime)
                 }
             } else {
-                binding.taskAddedDate.text = "Old task from $formattedDate"
+                binding.taskAddedDate.text = binding.root.context.getString(R.string.oldTasksTimestamp, formattedDate)
             }
 
 

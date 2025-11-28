@@ -39,4 +39,8 @@
     <string name="time">Time</string>
     <string name="dateAdded">Date Added: %1$s</string>
     <string name="timeAdded">Time Added: %1$s</string>
+    <string name="todayTimestamp">Today at %1$s</string>
+    <string name="yesterdayTimestamp">Yesterday at %1$s</string>
+    <string name="thisWeekTimestampt">This week</string>
+    <string name="oldTasksTimestamp">Old task from %1$s</string>
 </resources>
