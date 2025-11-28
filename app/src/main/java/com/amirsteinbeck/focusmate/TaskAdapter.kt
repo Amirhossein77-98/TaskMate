@@ -32,6 +32,20 @@ class TaskAdapter (
             binding.taskDescription.alpha = 1f
         }
 
+        fun timeStamper(timeTag: String, formattedTime: String): String {
+            if (timeTag == "Today") {
+                return binding.root.context.getString(R.string.todayTimestamp, formattedTime)
+            } else if (timeTag == "Yesterday") {
+                return binding.root.context.getString(R.string.yesterdayTimestamp, formattedTime)
+            } else if (timeTag == "Week") {
+                return binding.root.context.getString(R.string.thisWeekTimestampt)
+            } else if (timeTag == "Old") {
+                return binding.root.context.getString(R.string.oldTasksTimestamp, formattedTime)
+            } else {
+                return "Unknown Time"
+            }
+        }
+
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
 
@@ -56,15 +70,15 @@ class TaskAdapter (
             if (taskMonth == todayMonth) {
                 if ((todayDate.toInt() - taskDate.toInt()) != 0) {
                     if ((todayDate.toInt() - taskDate.toInt()) == 1) {
-                        binding.taskAddedDate.text = binding.root.context.getString(R.string.yesterdayTimestamp, formattedTime)
+                        binding.taskAddedDate.text = timeStamper("Yesterday", formattedTime)
                     } else if (todayDate.toInt() - taskDate.toInt() in 2..7) {
-                        binding.taskAddedDate.text = binding.root.context.getString(R.string.thisWeekTimestampt)
+                        binding.taskAddedDate.text = timeStamper("Week", formattedTime)
                     }
                 } else {
-                    binding.taskAddedDate.text = binding.root.context.getString(R.string.todayTimestamp, formattedTime)
+                    binding.taskAddedDate.text = timeStamper("Today", formattedTime)
                 }
             } else {
-                binding.taskAddedDate.text = binding.root.context.getString(R.string.oldTasksTimestamp, formattedDate)
+                binding.taskAddedDate.text = timeStamper("Old", formattedDate)
             }
 
 
