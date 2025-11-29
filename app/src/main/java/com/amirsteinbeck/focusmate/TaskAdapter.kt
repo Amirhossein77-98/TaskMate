@@ -78,10 +78,6 @@ class TaskAdapter (
                 binding.taskAddedDate.text = timeStamper("Old", formattedDate)
             }
 
-
-//            binding.taskAddedDate.text = binding.root.context.getString(R.string.dateAdded, formattedDate.toString())
-//            binding.taskAddedTime.text = binding.root.context.getString(R.string.timeAdded, formattedTime.toString())
-
             binding.root.setOnClickListener {
                 onItemShortClick(task, bindingAdapterPosition)
             }
