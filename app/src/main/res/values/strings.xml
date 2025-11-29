@@ -43,4 +43,6 @@
     <string name="yesterdayTimestamp">Yesterday at %1$s</string>
     <string name="thisWeekTimestampt">This week</string>
     <string name="oldTasksTimestamp">Old task from %1$s</string>
+    <string name="mainPage">Main Page</string>
+    <string name="settings">Settings</string>
 </resources>
