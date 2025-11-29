@@ -33,16 +33,13 @@ class TaskAdapter (
         }
 
         fun timeStamper(timeTag: String, formattedTime: String): String {
-            if (timeTag == "Today") {
-                return binding.root.context.getString(R.string.todayTimestamp, formattedTime)
-            } else if (timeTag == "Yesterday") {
-                return binding.root.context.getString(R.string.yesterdayTimestamp, formattedTime)
-            } else if (timeTag == "Week") {
-                return binding.root.context.getString(R.string.thisWeekTimestampt)
-            } else if (timeTag == "Old") {
-                return binding.root.context.getString(R.string.oldTasksTimestamp, formattedTime)
-            } else {
-                return "Unknown Time"
+            val cntx = binding.root.context
+            return when (timeTag) {
+                "Today" -> cntx.getString(R.string.todayTimestamp, formattedTime)
+                "Yesterday" -> cntx.getString(R.string.yesterdayTimestamp, formattedTime)
+                "Week" -> cntx.getString(R.string.thisWeekTimestampt)
+                "Old" -> cntx.getString(R.string.oldTasksTimestamp, formattedTime)
+                else -> return "Unknown Time"
             }
         }
 
@@ -118,7 +115,6 @@ class TaskAdapter (
 
                 sortTasks()
                 StorageHelper.saveTasks(binding.root.context, tasks)
-                sortTasks()
             }
         }
     }
