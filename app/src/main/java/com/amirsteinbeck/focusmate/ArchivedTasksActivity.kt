@@ -56,6 +56,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
 
         adapter = TaskAdapter(
             displayList,
+            if (LocaleHelper.getLanguage(this) == "en") "ltr" else "rtl",
             { clickedTask, position ->},
             {clickedTask, position ->}
         )

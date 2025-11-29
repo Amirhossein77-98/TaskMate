@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
 import android.icu.text.SimpleDateFormat
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
+import org.w3c.dom.Text
 import java.util.Date
 import java.util.Locale
 
 class TaskAdapter (
     private val tasks: MutableList<Task>,
+    private val layoutDir: String,
     private val onItemShortClick: (Task, Int) -> Unit,
     private val onItemLongClick: (Task, Int) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -43,8 +46,16 @@ class TaskAdapter (
             }
         }
 
+        fun isRtl(text: String): Boolean {
+            val firstChar = text.trim().firstOrNull() ?: return false
+            return firstChar in '\u0600' .. '\u06FF' ||
+                    firstChar in '\u0750' .. '\u077F' ||
+                    firstChar in '\u08A0' .. '\u08FF'
+        }
+
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
+
 
             val todayDateMillis = System.currentTimeMillis()
             val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
@@ -63,19 +74,38 @@ class TaskAdapter (
             val formattedTime = timeFormatter.format(date)
             val taskDate = dayFormatter.format(date)
             val taskMonth = monthFormatter.format(date)
+            var relativeTimeStamp = timeStamper("Unknown", formattedTime)
 
             if (taskMonth == todayMonth) {
                 if ((todayDate.toInt() - taskDate.toInt()) != 0) {
                     if ((todayDate.toInt() - taskDate.toInt()) == 1) {
-                        binding.taskAddedDate.text = timeStamper("Yesterday", formattedTime)
+                        relativeTimeStamp = timeStamper("Yesterday", formattedTime)
                     } else if (todayDate.toInt() - taskDate.toInt() in 2..7) {
-                        binding.taskAddedDate.text = timeStamper("Week", formattedTime)
+                        relativeTimeStamp = timeStamper("Week", formattedTime)
                     }
                 } else {
-                    binding.taskAddedDate.text = timeStamper("Today", formattedTime)
+                    relativeTimeStamp = timeStamper("Today", formattedTime)
                 }
             } else {
-                binding.taskAddedDate.text = timeStamper("Old", formattedDate)
+                relativeTimeStamp = timeStamper("Old", formattedDate)
+            }
+
+            binding.taskAddedDate.text = relativeTimeStamp
+
+            if (layoutDir == "ltr") {
+                binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_START
+                else View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskDescription.textAlignment = if (!isRtl(task.description)) View.TEXT_ALIGNMENT_TEXT_START
+                else View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_START
+                else View.TEXT_ALIGNMENT_TEXT_END
+            } else {
+                binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_END
+                else View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskDescription.textAlignment = if (!isRtl(task.description)) View.TEXT_ALIGNMENT_TEXT_END
+                else View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_END
+                else View.TEXT_ALIGNMENT_TEXT_START
             }
 
             binding.root.setOnClickListener {

@@ -77,8 +77,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
         fun openTaskBottomSheet(task: Task? = null, position: Int = -1, isEdit: Boolean) {
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.bottomsheet_edit_task, null)
@@ -133,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = TaskAdapter(
             displayList,
+            if (LocaleHelper.getLanguage(this) == "en") "ltr" else "rtl",
             { clickedTask, position ->
 //                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
 
