@@ -14,9 +14,23 @@
         android:backgroundTint="#00000000"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:text="@string/mainPage"
+        android:textSize="12dp"
         style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
         app:icon="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Archived Tasks"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView

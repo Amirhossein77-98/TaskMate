@@ -46,4 +46,5 @@
     <string name="oldTasksTimestamp">وظیفه ای قدیمی از زمان %1$s</string>
     <string name="mainPage">صفحه اصلی</string>
     <string name="settings">تنظیمات</string>
+    <string name="archivedTasks">وظایف آرشیو شده</string>
 </resources>
