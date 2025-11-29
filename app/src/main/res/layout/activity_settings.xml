@@ -23,7 +23,6 @@
             app:icon="@drawable/baseline_arrow_back_24"
             app:backgroundTint="#00000000"
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-            app:iconTint="@color/black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
