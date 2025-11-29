@@ -48,4 +48,10 @@
     <string name="settings">تنظیمات</string>
     <string name="archivedTasks">وظایف آرشیو شده</string>
     <string name="credentials">اعتبارات</string>
+    <string name="dayNightMode">حالت شب/روز</string>
+    <string name="autoSortTasks">مرتب سازی خودکار وظایف</string>
+    <string name="english">انگلیسی</string>
+    <string name="persian">فارسی</string>
+    <string name="SelectLanguage">انتخاب زبان</string>
+    <string name="language">زبان</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.amirsteinbeck.focusmate
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,8 +10,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.amirsteinbeck.focusmate.databinding.ActivityCredentialsBinding
 import androidx.core.net.toUri
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
 
 class CredentialsActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase?.let { LocaleHelper.applyLanguage(it) }
+        super.attachBaseContext(context)
+    }
 
     private lateinit var binding: ActivityCredentialsBinding
 

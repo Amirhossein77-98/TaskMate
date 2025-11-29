@@ -29,6 +29,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
+            android:id="@+id/activityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
@@ -42,8 +43,39 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/settingsContainer"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/topBar"/>
+        android:layout_marginTop="40dp"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"> 
+        
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/dayNightModeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dayNightMode"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/autoSortSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/autoSortTasks"/>
+        
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/language"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/languageSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

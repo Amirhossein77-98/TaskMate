@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.FadeItemAnimator
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -32,12 +34,22 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: TaskAdapter
 
+    fun tasksSorter() {
+        if (SettingsHelper.isAutoSort(this)) {
+            adapter.sortTasks()
+        }
+    }
     fun updateLists() {
         val fullList = StorageHelper.loadTasks(this)
         val displayList = fullList.filter { !it.isArchived }.toMutableList()
 
-        adapter.sortTasks()
+        tasksSorter()
         adapter.updateData(displayList)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase?.let { LocaleHelper.applyLanguage(it) }
+        super.attachBaseContext(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 updateLists()
                 fullList.add(theTask)
                 updateEmptyView()
-                adapter.sortTasks()
+                tasksSorter()
             }
             updateEmptyView()
             dialog.setContentView(view)
@@ -128,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
 
-        adapter.sortTasks()
+        tasksSorter()
 
         val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -173,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
                 if (indexOfRemovedTaskInFullList != -1) fullList.removeAt(indexOfRemovedTaskInFullList)
                 StorageHelper.saveTasks(this@MainActivity, fullList)
-                if (fullList.size > 1) adapter.sortTasks()
+                if (fullList.size > 1) tasksSorter()
                 updateEmptyView()
 
                 Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
@@ -182,7 +194,7 @@ class MainActivity : AppCompatActivity() {
                         adapter.notifyItemInserted(position)
                         fullList.add(indexOfRemovedTaskInFullList, removedTask)
                         StorageHelper.saveTasks(this@MainActivity, fullList)
-                        adapter.sortTasks()
+                        tasksSorter()
                         updateEmptyView()
 
                     }.show()
@@ -239,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
-                if (fullList.size > 1) adapter.sortTasks()
+                if (fullList.size > 1) tasksSorter()
 
                 Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {
@@ -252,7 +264,7 @@ class MainActivity : AppCompatActivity() {
                         displayList.add(position, archivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
-                        adapter.sortTasks()
+                        tasksSorter()
                     }.show()
             }
         }
@@ -271,13 +283,8 @@ class MainActivity : AppCompatActivity() {
             openTaskBottomSheet(isEdit = false)
         }
 
-        binding.resetButton.setOnClickListener {
-            binding.userInput.setText("")
-            binding.taskInputLayout.error = null
-            binding.taskInputLayout.isErrorEnabled = false
-            adapter.clearTasks()
-            StorageHelper.saveTasks(this, displayList)
-            updateEmptyView()
+        binding.settingsButton.setOnClickListener {
+            NavigationHelper.goToSettings(this)
         }
 
         binding.rightPageButtonNavigator.setOnClickListener {
@@ -289,7 +296,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         AnimationHelper.applyPressAnimation(this, binding.submitButton)
-        AnimationHelper.applyPressAnimation(this, binding.resetButton)
+        AnimationHelper.applyPressAnimation(this, binding.settingsButton)
         AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
         AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
     }

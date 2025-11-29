@@ -1,5 +1,6 @@
 package com.amirsteinbeck.focusmate
 
+import android.content.Context
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
@@ -12,10 +13,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
 import com.amirsteinbeck.focusmate.databinding.ActivityArchivedTasksBinding
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ArchivedTasksActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase?.let { LocaleHelper.applyLanguage(it) }
+        super.attachBaseContext(context)
+    }
 
     private lateinit var binding: ActivityArchivedTasksBinding
     private lateinit var fullList: MutableList<Task>

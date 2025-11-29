@@ -22,4 +22,9 @@ object NavigationHelper {
         activity.finish()
 //        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
+
+    fun goToSettings(activity: Activity) {
+        val intent = Intent(activity, SettingsActivity::class.java)
+        activity.startActivity(intent)
+    }
 }
