@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusMate">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CredentialsActivity"
             android:exported="false" />
         <activity
