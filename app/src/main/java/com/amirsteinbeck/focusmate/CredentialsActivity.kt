@@ -32,10 +32,21 @@ class CredentialsActivity : AppCompatActivity() {
             insets
         }
 
-        binding.githubLogo.setOnClickListener {
+        binding.github.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, "https://github.com/Amirhossein77-98".toUri())
             startActivity(intent)
         }
+
+        binding.instagramId.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, "https://instagram.com/@DailySkillSeeker".toUri())
+            startActivity(intent)
+        }
+
+        binding.telegramId.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, "https://t.me/MrAmirsteinbeckusInGargantua".toUri())
+            startActivity(intent)
+        }
+
         binding.backButton.setOnClickListener {
             NavigationHelper.goBack(this)
         }

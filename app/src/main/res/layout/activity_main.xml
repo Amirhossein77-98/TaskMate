@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:backgroundTint="?attr/colorPrimaryDark"
+            android:backgroundTint="?attr/colorPrimary"
             android:paddingEnd="10dp"
             android:text="@string/app_name"
             app:strokeWidth="1dp"
