@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/white"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="?attr/colorOnTertiaryFixed"
             app:strokeWidth="1dp"
             app:strokeColor="@color/design_default_color_surface"
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
@@ -32,14 +32,14 @@
             app:iconGravity="textStart"
             app:iconTint="@color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/leftPageButtonNavigator" />
+            app:layout_constraintStart_toStartOf="@id/parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/rightPageButtonNavigator"
+            android:id="@+id/archivesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:backgroundTint="@color/blueGreen"
+            android:backgroundTint="?attr/colorOnTertiaryFixed"
             app:strokeWidth="1dp"
             app:strokeColor="@color/design_default_color_surface"
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
@@ -50,12 +50,11 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/leftPageButtonNavigator"
-            android:layout_width="0dp"
+            android:id="@+id/appInfoButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:backgroundTint="?attr/colorOnTertiaryFixed"
-            android:layout_marginEnd="10dp"
+            android:backgroundTint="?attr/colorPrimaryDark"
             android:paddingEnd="10dp"
             android:text="@string/app_name"
             app:strokeWidth="1dp"
@@ -66,7 +65,8 @@
             app:iconGravity="start"
             app:iconPadding="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/settingsButton"
+            app:layout_constraintEnd_toStartOf="@id/archivesButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,6 +147,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textStyle="bold"
+            app:backgroundTint="?attr/colorPrimaryDark"
             style="@style/Widget.Material3.Button.IconButton.Filled"
             app:icon="@drawable/plus_svgrepo_com"
             app:iconGravity="end"

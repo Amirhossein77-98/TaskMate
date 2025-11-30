@@ -287,18 +287,18 @@ class MainActivity : AppCompatActivity() {
             NavigationHelper.goToSettings(this)
         }
 
-        binding.rightPageButtonNavigator.setOnClickListener {
+        binding.archivesButton.setOnClickListener {
             NavigationHelper.goToArchivedTasks(this)
         }
 
-        binding.leftPageButtonNavigator.setOnClickListener {
+        binding.appInfoButton.setOnClickListener {
             NavigationHelper.goToCredentials(this)
         }
 
         AnimationHelper.applyPressAnimation(this, binding.submitButton)
         AnimationHelper.applyPressAnimation(this, binding.settingsButton)
-        AnimationHelper.applyPressAnimation(this, binding.rightPageButtonNavigator)
-        AnimationHelper.applyPressAnimation(this, binding.leftPageButtonNavigator)
+        AnimationHelper.applyPressAnimation(this, binding.archivesButton)
+        AnimationHelper.applyPressAnimation(this, binding.appInfoButton)
     }
 
     override fun onResume() {
