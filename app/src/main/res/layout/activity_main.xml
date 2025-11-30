@@ -32,7 +32,7 @@
             app:iconGravity="textStart"
             app:iconTint="@color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/archivesButton"
