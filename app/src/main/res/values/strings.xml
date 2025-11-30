@@ -47,10 +47,10 @@
     <string name="settings">Settings</string>
     <string name="archivedTasks">Archived Tasks</string>
     <string name="credentials">Credentials</string>
-    <string name="dayNightMode">Day/Night Mode</string>
     <string name="autoSortTasks">Auto-sort Tasks</string>
     <string name="english">English</string>
     <string name="persian">Persian</string>
     <string name="SelectLanguage">Select Language</string>
     <string name="language">Language</string>
+    <string name="nightMode">Night Mode</string>
 </resources>

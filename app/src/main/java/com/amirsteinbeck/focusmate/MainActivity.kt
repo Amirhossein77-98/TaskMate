@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -63,6 +64,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(0, 0, 0, imeInsets.bottom)
             insets
         }
+
+        AppCompatDelegate.setDefaultNightMode(
+            if (SettingsHelper.isDarkMode(this))
+                AppCompatDelegate.MODE_NIGHT_YES
+            else
+                AppCompatDelegate.MODE_NIGHT_NO
+        )
 
         fullList = StorageHelper.loadTasks(this)
         displayList = fullList.filter { !it.isArchived }.toMutableList()

@@ -54,7 +54,7 @@
             android:id="@+id/dayNightModeSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dayNightMode"/>
+            android:text="@string/nightMode"/>
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/autoSortSwitch"
