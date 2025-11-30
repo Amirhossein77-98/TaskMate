@@ -60,7 +60,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
             { clickedTask, position ->},
             {clickedTask, position ->}
         )
-        adapter.sortTasks()
+        adapter.sortTasks(this)
 
         val leftSwipeHelper = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -111,7 +111,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
-                if (fullList.size > 1) adapter.sortTasks()
+                if (fullList.size > 1) adapter.sortTasks(this@ArchivedTasksActivity)
 
                 Snackbar.make(binding.root, getString(R.string.unarchiveSnackbarMessage, unArchivedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {
@@ -125,7 +125,7 @@ class ArchivedTasksActivity : AppCompatActivity() {
                         displayList.add(position, unArchivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
-                        adapter.sortTasks()
+                        adapter.sortTasks(this@ArchivedTasksActivity)
                     }.show()
             }
         }

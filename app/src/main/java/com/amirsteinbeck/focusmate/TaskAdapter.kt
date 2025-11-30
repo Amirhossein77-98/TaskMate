@@ -1,12 +1,14 @@
 package com.amirsteinbeck.focusmate
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
 import android.icu.text.SimpleDateFormat
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
 import org.w3c.dom.Text
 import java.util.Date
@@ -56,13 +58,11 @@ class TaskAdapter (
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
 
-
             val todayDateMillis = System.currentTimeMillis()
             val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
             val monthFormatter = SimpleDateFormat("MM", Locale.getDefault())
             val todayDate = dayFormatter.format(todayDateMillis)
             val todayMonth = monthFormatter.format(todayDateMillis)
-
 
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
@@ -125,7 +125,7 @@ class TaskAdapter (
 
             binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
                 task.isDone = isChecked
-                sortTasks()
+                sortTasks(binding.root.context)
                 notifyItemChanged(bindingAdapterPosition)
             }
 
@@ -139,7 +139,7 @@ class TaskAdapter (
 
                 if (isChecked) striker() else unStriker()
 
-                sortTasks()
+                sortTasks(binding.root.context)
                 StorageHelper.saveTasks(binding.root.context, tasks)
             }
         }
@@ -189,10 +189,12 @@ class TaskAdapter (
         notifyDataSetChanged()
     }
 
-    fun sortTasks() {
-        tasks.sortWith(
-            compareBy<Task> { it.isDone }
-        )
-        notifyDataSetChanged()
+    fun sortTasks(context: Context) {
+            if (SettingsHelper.isAutoSort(context)) {
+                tasks.sortWith(
+                    compareBy<Task> { it.isDone }
+                )
+                notifyDataSetChanged()
+            }
     }
 }

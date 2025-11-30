@@ -29,22 +29,15 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var fullList: MutableList<Task>
     private lateinit var displayList: MutableList<Task>
-
     private lateinit var adapter: TaskAdapter
 
-    fun tasksSorter() {
-        if (SettingsHelper.isAutoSort(this)) {
-            adapter.sortTasks()
-        }
-    }
     fun updateLists() {
         val fullList = StorageHelper.loadTasks(this)
         val displayList = fullList.filter { !it.isArchived }.toMutableList()
 
-        tasksSorter()
+        adapter.sortTasks(this)
         adapter.updateData(displayList)
     }
 
@@ -130,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 updateLists()
                 fullList.add(theTask)
                 updateEmptyView()
-                tasksSorter()
+                adapter.sortTasks(this)
             }
             updateEmptyView()
             dialog.setContentView(view)
@@ -147,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
 
-        tasksSorter()
+        adapter.sortTasks(this)
 
         val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -192,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
                 if (indexOfRemovedTaskInFullList != -1) fullList.removeAt(indexOfRemovedTaskInFullList)
                 StorageHelper.saveTasks(this@MainActivity, fullList)
-                if (fullList.size > 1) tasksSorter()
+                if (fullList.size > 1) adapter.sortTasks(this@MainActivity)
                 updateEmptyView()
 
                 Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
@@ -201,7 +194,7 @@ class MainActivity : AppCompatActivity() {
                         adapter.notifyItemInserted(position)
                         fullList.add(indexOfRemovedTaskInFullList, removedTask)
                         StorageHelper.saveTasks(this@MainActivity, fullList)
-                        tasksSorter()
+                        adapter.sortTasks(this@MainActivity)
                         updateEmptyView()
 
                     }.show()
@@ -258,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                 displayList.removeAt(position)
                 adapter.notifyItemRemoved(position)
                 updateEmptyView()
-                if (fullList.size > 1) tasksSorter()
+                if (fullList.size > 1) adapter.sortTasks(this@MainActivity)
 
                 Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo)) {
@@ -271,7 +264,7 @@ class MainActivity : AppCompatActivity() {
                         displayList.add(position, archivedTask)
                         adapter.notifyItemInserted(position)
                         updateEmptyView()
-                        tasksSorter()
+                        adapter.sortTasks(this@MainActivity)
                     }.show()
             }
         }
@@ -312,5 +305,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         updateLists()
+        adapter.sortTasks(this@MainActivity)
     }
 }
