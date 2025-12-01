@@ -1,7 +1,9 @@
 package com.amirsteinbeck.focusmate
 
+import android.R.attr
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +22,7 @@ import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
 import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -160,16 +163,19 @@ class MainActivity : AppCompatActivity() {
             ) {
                 RecyclerViewSwipeDecorator.Builder(
                     c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeLeftBackgroundColor(
-                    ContextCompat.getColor(this@MainActivity, R.color.red)
+                ).addSwipeLeftBackgroundColor(MaterialColors.getColor(this@MainActivity,
+                            com.google.android.material.R.attr.colorOnError,
+                            Color.RED)
                 )
                     .addSwipeLeftActionIcon(R.drawable.trash_bin_minimalistic_2_svgrepo_com_24)
-                    .setSwipeLeftActionIconTint(
-                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    .setSwipeLeftActionIconTint(MaterialColors.getColor(this@MainActivity,
+                            com.google.android.material.R.attr.colorSurfaceInverse,
+                            Color.WHITE)
                     )
                     .addSwipeLeftLabel(getString(R.string.delete))
-                    .setSwipeLeftLabelColor(
-                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    .setSwipeLeftLabelColor(MaterialColors.getColor(this@MainActivity,
+                        com.google.android.material.R.attr.colorSurfaceInverse,
+                        Color.WHITE)
                     )
                     .create()
                     .decorate()
@@ -224,12 +230,14 @@ class MainActivity : AppCompatActivity() {
                     ContextCompat.getColor(this@MainActivity, R.color.teal)
                 )
                     .addSwipeRightActionIcon(R.drawable.archive_check_svgrepo_com_24)
-                    .setSwipeRightActionIconTint(
-                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    .setSwipeRightActionIconTint(MaterialColors.getColor(this@MainActivity,
+                        com.google.android.material.R.attr.colorSurfaceInverse,
+                        Color.WHITE)
                     )
                     .addSwipeRightLabel(getString(R.string.archive))
-                    .setSwipeRightLabelColor(
-                        ContextCompat.getColor(this@MainActivity, R.color.white)
+                    .setSwipeRightLabelColor(MaterialColors.getColor(this@MainActivity,
+                        com.google.android.material.R.attr.colorSurfaceInverse,
+                        Color.WHITE)
                     )
                     .create()
                     .decorate()
