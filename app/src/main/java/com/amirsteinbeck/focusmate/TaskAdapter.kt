@@ -21,6 +21,27 @@ class TaskAdapter (
     private val onItemLongClick: (Task, Int) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
+    private fun formatRelativeTimestamp(context: Context, timestamp: Long): String {
+        val now = System.currentTimeMillis()
+        val oneDay = 24 * 60 * 60 * 1000
+
+        val date = Date(timestamp)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val timeFormat = java.text.SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val formattedDate = dateFormat.format(date)
+        val formattedTime = timeFormat.format(date)
+
+        val diffDays = (now - timestamp) / oneDay
+
+        return when (diffDays.toInt()) {
+            0 -> context.getString(R.string.todayTimestamp, formattedTime)
+            1 -> context.getString(R.string.yesterdayTimestamp, formattedTime)
+            in 2..6 -> context.getString(R.string.thisWeekTimestampt)
+            else -> context.getString(R.string.oldTasksTimestamp, formattedDate)
+        }
+    }
+
     inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun striker() {
@@ -65,35 +86,11 @@ class TaskAdapter (
             val todayDateMillis = System.currentTimeMillis()
             val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
             val monthFormatter = SimpleDateFormat("MM", Locale.getDefault())
-            val todayDate = dayFormatter.format(todayDateMillis)
-            val todayMonth = monthFormatter.format(todayDateMillis)
 
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
-            val date = Date(task.id)
-            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val formattedDate = dateFormatter.format(date)
-            val formattedTime = timeFormatter.format(date)
-            val taskDate = dayFormatter.format(date)
-            val taskMonth = monthFormatter.format(date)
-            var relativeTimeStamp = timeStamper("Unknown", formattedTime)
-
-            if (taskMonth == todayMonth) {
-                if ((todayDate.toInt() - taskDate.toInt()) != 0) {
-                    if ((todayDate.toInt() - taskDate.toInt()) == 1) {
-                        relativeTimeStamp = timeStamper("Yesterday", formattedTime)
-                    } else if (todayDate.toInt() - taskDate.toInt() in 2..7) {
-                        relativeTimeStamp = timeStamper("Week", formattedTime)
-                    }
-                } else {
-                    relativeTimeStamp = timeStamper("Today", formattedTime)
-                }
-            } else {
-                relativeTimeStamp = timeStamper("Old", formattedDate)
-            }
-
+            val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id)
             binding.taskAddedDate.text = relativeTimeStamp
 
             if (layoutDir == "ltr") {
