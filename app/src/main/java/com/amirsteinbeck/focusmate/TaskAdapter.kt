@@ -10,7 +10,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
-import org.w3c.dom.Text
 import java.util.Date
 import java.util.Locale
 
@@ -62,17 +61,6 @@ class TaskAdapter (
             binding.taskAddedDate.alpha = 1f
         }
 
-        fun timeStamper(timeTag: String, formattedTime: String): String {
-            val cntx = binding.root.context
-            return when (timeTag) {
-                "Today" -> cntx.getString(R.string.todayTimestamp, formattedTime)
-                "Yesterday" -> cntx.getString(R.string.yesterdayTimestamp, formattedTime)
-                "Week" -> cntx.getString(R.string.thisWeekTimestampt)
-                "Old" -> cntx.getString(R.string.oldTasksTimestamp, formattedTime)
-                else -> return "Unknown Time"
-            }
-        }
-
         fun isRtl(text: String): Boolean {
             val firstChar = text.trim().firstOrNull() ?: return false
             return firstChar in '\u0600' .. '\u06FF' ||
@@ -82,10 +70,6 @@ class TaskAdapter (
 
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
-
-            val todayDateMillis = System.currentTimeMillis()
-            val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
-            val monthFormatter = SimpleDateFormat("MM", Locale.getDefault())
 
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
@@ -190,12 +174,21 @@ class TaskAdapter (
         notifyDataSetChanged()
     }
 
+
     fun sortTasks(context: Context) {
-            if (SettingsHelper.isAutoSort(context)) {
-                tasks.sortWith(
-                    compareBy<Task> { it.isDone }
-                )
-                notifyDataSetChanged()
+        if (!SettingsHelper.isAutoSort(context)) return
+
+        val sortedList = tasks.sortedWith(compareBy<Task> { it.isDone })
+
+        for (targetIndex in sortedList.indices) {
+            val targetTask = sortedList[targetIndex]
+            val currentIndex = tasks.indexOf(targetTask)
+
+            if (currentIndex != targetIndex) {
+                tasks.removeAt(currentIndex)
+                tasks.add(targetIndex, targetTask)
+                notifyItemMoved(currentIndex, targetIndex)
             }
+        }
     }
 }
