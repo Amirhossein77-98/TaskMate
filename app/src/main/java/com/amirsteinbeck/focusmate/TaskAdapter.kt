@@ -116,7 +116,7 @@ class TaskAdapter (
 
             if (task.isDone) striker() else unStriker()
 
-            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
+            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->  // ← This is set TWICE!
                 task.isDone = isChecked
 
                 scaleUpX.start()
@@ -161,11 +161,6 @@ class TaskAdapter (
     fun updateItem(position: Int, task: Task) {
         tasks[position] = task
         notifyItemChanged(position)
-    }
-
-    fun clearTasks() {
-        tasks.clear()
-        notifyDataSetChanged()
     }
 
     fun updateData(newList: MutableList<Task>) {
