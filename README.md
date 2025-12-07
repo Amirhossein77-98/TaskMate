@@ -73,3 +73,73 @@ Download the latest release from the **Releases** page:
 git clone https://github.com/Amirhossein77-98/focusmate.git
 cd focusmate
 ./gradlew assembleDebug
+````
+
+### The APK will be located in:
+```asgl
+app/build/outputs/apk/debug/
+```
+
+---
+
+## 📁 Project Structure:
+
+```agsl
+app/
+├── java/com/amirsteinbeck/focusmate/
+│   ├── MainActivity.kt
+│   ├── TaskAdapter.kt
+│   ├── ArchivedTasksActivity.kt
+│   ├── SettingsActivity.kt
+│   ├── helpers/
+│   │    ├── StorageHelper.kt
+│   │    ├── LocaleHelper.kt
+│   │    ├── SettingsHelper.kt
+│   │    └── NavigationHelper.kt
+│   └── models/
+│        └── Task.kt
+├── res/
+│   ├── layout/
+│   ├── values/
+│   └── drawable/
+└── AndroidManifest.xml
+
+```
+
+---
+
+## 📁 Privacy:
+FocusMate is built with privacy in mind:
+- ❌ No internet access
+- ❌ No trackers
+- ❌ No analytics
+- ❌ No cloud storage
+- ✔️ All data is stored *locally
+
+---
+
+## 📄 License:
+This project is licensed under the MIT License.
+See the LICENSE file for full details.
+
+---
+
+## 🤝 Contributing:
+Contributions are welcome!
+You can help improve FocusMate by:
+- Reporting bugs
+- Suggesting features
+- Contributing translations (especially RTL languages)
+- Improving UI/UX
+- Cleaning or optimizing code
+
+## ⭐ Support
+If you enjoy FocusMate, consider:
+- Starring the repo ⭐
+- Sharing the app with others
+- Opening Issues for feature ideas or feedback
+
+## 🙌 Author
+Amirhossein Gholizadeh
+GitHub: https://github.com/Amirhossein77-98
+Instagram / YouTube: DailySkillSeeker
