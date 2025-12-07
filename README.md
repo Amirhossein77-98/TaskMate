@@ -44,7 +44,10 @@ A clean layout using Material Design 3 + Material You dynamic colors.
 
 ## 📸 Screenshots
 
-*Add your screenshots here*
+![Main Screen](screenshots/1.png)
+![Settings](screenshots/2.png)
+![Archived Tasks](screenshots/3.png)
+
 
 ---
 
@@ -114,7 +117,7 @@ FocusMate is built with privacy in mind:
 - ❌ No trackers
 - ❌ No analytics
 - ❌ No cloud storage
-- ✔️ All data is stored *locally
+- ✔️ All data is stored **locally on the device**
 
 ---
 
