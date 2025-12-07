@@ -1,0 +1,34 @@
+License: MIT
+AuthorName: Amirhossein Gholizadeh
+WebSite: https://github.com/Amirhossein77-98
+SourceCode: https://github.com/Amirhossein77-98/focusmate
+IssueTracker: https://github.com/Amirhossein77-98/focusmate/issues
+Changelog: https://github.com/Amirhossein77-98/focusmate/releases
+
+Summary: A minimal and fast to-do manager built with Material Design 3.
+Description: |
+  FocusMate is a clean, fast, and modern task manager designed around simplicity.
+  Features include:
+    • Smart swipe gestures (archive/delete)
+    • Auto-sort mode
+    • Dark/Light mode
+    • Relative timestamps (Today, Yesterday, This week)
+    • Task archiving system
+    • Localization (English + Persian)
+    • Material You / OneUI-inspired interface
+
+AutoName: FocusMate
+
+Categories:
+  - Productivity
+
+Builds:
+  - versionName: 4.10.1
+    versionCode: 41001
+    commit: v4.10.1
+    subdir: app
+    gradle:
+      - yes
+
+RequiresRoot: false
+AntiFeatures: []
