@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import android.content.Context
 import android.graphics.Canvas
@@ -13,8 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
-import com.amirsteinbeck.focusmate.databinding.ActivityArchivedTasksBinding
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
+import com.amirsteinbeck.taskmate.databinding.ActivityArchivedTasksBinding
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ArchivedTasksActivity : AppCompatActivity() {

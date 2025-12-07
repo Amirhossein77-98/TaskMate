@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import org.junit.Test
 

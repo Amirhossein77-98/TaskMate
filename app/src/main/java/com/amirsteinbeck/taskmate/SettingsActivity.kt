@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import android.content.Context
 import android.content.Intent
@@ -8,9 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
-import com.amirsteinbeck.focusmate.databinding.ActivitySettingsBinding
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
+import com.amirsteinbeck.taskmate.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
 

@@ -1,7 +1,7 @@
-# 🧠 FocusMate
+# 🧠 TaskMate
 ### A minimal, fast, elegant task manager for Android — built with Material You & OneUI-inspired design.
 
-FocusMate is a lightweight and beautifully polished to-do manager designed for clarity and speed.  
+TaskMate is a lightweight and beautifully polished to-do manager designed for clarity and speed.  
 Built in Kotlin with modern Android architecture, it combines simplicity with powerful features such as auto-sorting, swipe gestures, archiving, localization, and dark mode.
 
 ---
@@ -56,11 +56,11 @@ A clean layout using Material Design 3 + Material You dynamic colors.
 ## 📦 Installation
 
 ### **F-Droid (coming soon)**
-FocusMate will be available on F-Droid after submission.
+TaskMate will be available on F-Droid after submission.
 
 ### **Manual APK**
 Download the latest release from the **Releases** page:  
-👉 https://github.com/Amirhossein77-98/focusmate/releases
+👉 https://github.com/Amirhossein77-98/taskmate/releases
 
 ---
 
@@ -75,8 +75,8 @@ Download the latest release from the **Releases** page:
 ### Build steps
 
 ```bash
-git clone https://github.com/Amirhossein77-98/focusmate.git
-cd focusmate
+git clone https://github.com/Amirhossein77-98/taskmate.git
+cd taskmate
 ./gradlew assembleDebug
 ````
 
@@ -91,7 +91,7 @@ app/build/outputs/apk/debug/
 
 ```agsl
 app/
-├── java/com/amirsteinbeck/focusmate/
+├── java/com/amirsteinbeck/taskmate/
 │   ├── MainActivity.kt
 │   ├── TaskAdapter.kt
 │   ├── ArchivedTasksActivity.kt
@@ -114,7 +114,7 @@ app/
 ---
 
 ## 📁 Privacy:
-FocusMate is built with privacy in mind:
+TaskMate is built with privacy in mind:
 - ❌ No internet access
 - ❌ No trackers
 - ❌ No analytics
@@ -131,7 +131,7 @@ See the LICENSE file for full details.
 
 ## 🤝 Contributing:
 Contributions are welcome!
-You can help improve FocusMate by:
+You can help improve TaskMate by:
 - Reporting bugs
 - Suggesting features
 - Contributing translations (especially RTL languages)
@@ -139,7 +139,7 @@ You can help improve FocusMate by:
 - Cleaning or optimizing code
 
 ## ⭐ Support
-If you enjoy FocusMate, consider:
+If you enjoy TaskMate, consider:
 - Starring the repo ⭐
 - Sharing the app with others
 - Opening Issues for feature ideas or feedback

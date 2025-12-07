@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,13 +1,13 @@
 License: MIT
 AuthorName: Amirhossein Gholizadeh
 WebSite: https://github.com/Amirhossein77-98
-SourceCode: https://github.com/Amirhossein77-98/focusmate
-IssueTracker: https://github.com/Amirhossein77-98/focusmate/issues
-Changelog: https://github.com/Amirhossein77-98/focusmate/releases
+SourceCode: https://github.com/Amirhossein77-98/taskmate
+IssueTracker: https://github.com/Amirhossein77-98/taskmate/issues
+Changelog: https://github.com/Amirhossein77-98/taskmate/releases
 
 Summary: A minimal and fast to-do manager built with Material Design 3.
 Description: |
-  FocusMate is a clean, fast, and modern task manager designed around simplicity.
+  TaskMate is a clean, fast, and modern task manager designed around simplicity.
   Features include:
     • Smart swipe gestures (archive/delete)
     • Auto-sort mode
@@ -17,7 +17,7 @@ Description: |
     • Localization (English + Persian)
     • Material You / OneUI-inspired interface
 
-AutoName: FocusMate
+AutoName: TaskMate
 
 Categories:
   - Productivity

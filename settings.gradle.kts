@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FocusMate"
+rootProject.name = "TaskMate"
 include(":app")
  

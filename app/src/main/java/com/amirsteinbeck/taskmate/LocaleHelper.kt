@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate
 
 import android.content.Context
 import android.content.res.Configuration

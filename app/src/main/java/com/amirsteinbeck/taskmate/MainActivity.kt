@@ -1,6 +1,5 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
-import android.R.attr
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -17,10 +16,10 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.FadeItemAnimator
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
-import com.amirsteinbeck.focusmate.databinding.ActivityMainBinding
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.FadeItemAnimator
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
+import com.amirsteinbeck.taskmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar

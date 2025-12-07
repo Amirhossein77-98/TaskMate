@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate
 
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.amirsteinbeck.focusmate"
+    namespace = "com.amirsteinbeck.taskmate"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.amirsteinbeck.focusmate"
+        applicationId = "com.amirsteinbeck.taskmate"
         minSdk = 29
         targetSdk = 36
         versionCode = 4

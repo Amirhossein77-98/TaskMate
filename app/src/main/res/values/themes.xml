@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.FocusMate" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.TaskMate" parent="Theme.Material3.DayNight.NoActionBar">
 
         <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>

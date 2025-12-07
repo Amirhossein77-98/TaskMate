@@ -1,4 +1,4 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -8,8 +8,8 @@ import android.graphics.Paint
 import android.icu.text.SimpleDateFormat
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.SettingsHelper
-import com.amirsteinbeck.focusmate.databinding.ItemTaskBinding
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
+import com.amirsteinbeck.taskmate.databinding.ItemTaskBinding
 import java.util.Date
 import java.util.Locale
 

@@ -1,16 +1,15 @@
-package com.amirsteinbeck.focusmate
+package com.amirsteinbeck.taskmate
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.amirsteinbeck.focusmate.databinding.ActivityCredentialsBinding
+import com.amirsteinbeck.taskmate.databinding.ActivityCredentialsBinding
 import androidx.core.net.toUri
-import com.amirsteinbeck.focusmate.com.amirsteinbeck.focusmate.LocaleHelper
+import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
 
 class CredentialsActivity : AppCompatActivity() {
 
