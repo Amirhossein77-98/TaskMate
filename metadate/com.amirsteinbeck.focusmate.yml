@@ -23,9 +23,9 @@ Categories:
   - Productivity
 
 Builds:
-  - versionName: 4.10.1
-    versionCode: 41001
-    commit: v4.10.1
+  - versionName: 4.10.5
+    versionCode: 41005
+    commit: v4.10.5
     subdir: app
     gradle:
       - yes
