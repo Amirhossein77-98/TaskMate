@@ -1,0 +1,11 @@
+TaskMate helps you stay organized with a clean, minimalistic interface.
+Features include:
+• Add, edit, delete, and archive tasks
+• Auto-sort completed tasks
+• Beautiful Material Design
+• Multilingual support (English & Persian)
+• Dark mode
+• Swipe actions with animations
+• Timestamped tasks with smart formatting
+
+Focus on what matters — distraction-free.

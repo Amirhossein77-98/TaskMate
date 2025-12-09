@@ -1,0 +1,4 @@
+• Initial public release
+• Added tasks management features
+• Added archiving and auto-sorting
+• Added dark mode and Persian language support

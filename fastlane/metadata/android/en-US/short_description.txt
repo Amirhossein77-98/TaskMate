@@ -1,0 +1,1 @@
+A simple, clean, distraction-free task manager for daily focus.
