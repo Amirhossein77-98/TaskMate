@@ -12,10 +12,17 @@ android {
         minSdk = 29
         targetSdk = 36
         versionCode = 4
-        versionName = "4.10.5"
+        versionName = "4.10.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+
+        dependenciesInfo {
+            includeInApk = false
+            includeInBundle = false
+        }
+
 
     buildTypes {
         release {
