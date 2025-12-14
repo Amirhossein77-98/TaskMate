@@ -11,7 +11,7 @@ android {
         applicationId = "com.amirsteinbeck.taskmate"
         minSdk = 29
         targetSdk = 36
-        versionCode = 4
+        versionCode = 41007
         versionName = "4.10.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,8 +54,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.material3)
-    implementation("com.google.android.material:material:1.13.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.material)
+    implementation("com.google.code.gson:gson:2.13.2")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
