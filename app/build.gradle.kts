@@ -11,8 +11,8 @@ android {
         applicationId = "com.amirsteinbeck.taskmate"
         minSdk = 29
         targetSdk = 36
-        versionCode = 41007
-        versionName = "4.10.7"
+        versionCode = 41008
+        versionName = "4.10.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
