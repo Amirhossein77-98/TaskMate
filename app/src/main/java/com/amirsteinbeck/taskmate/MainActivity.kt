@@ -144,138 +144,24 @@ class MainActivity : AppCompatActivity() {
 
         adapter.sortTasks(this)
 
-        val leftSwipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ) = false
+        // In MainActivity.kt, inside the onCreate method
 
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                RecyclerViewSwipeDecorator.Builder(
-                    c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeLeftBackgroundColor(MaterialColors.getColor(this@MainActivity,
-                            com.google.android.material.R.attr.colorOnError,
-                            Color.RED)
-                )
-                    .addSwipeLeftActionIcon(R.drawable.trash_bin_minimalistic_2_svgrepo_com_24)
-                    .setSwipeLeftActionIconTint(MaterialColors.getColor(this@MainActivity,
-                            com.google.android.material.R.attr.colorSurfaceInverse,
-                            Color.WHITE)
-                    )
-                    .addSwipeLeftLabel(getString(R.string.delete))
-                    .setSwipeLeftLabelColor(MaterialColors.getColor(this@MainActivity,
-                        com.google.android.material.R.attr.colorSurfaceInverse,
-                        Color.WHITE)
-                    )
-                    .create()
-                    .decorate()
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                updateEmptyView()
-            }
+// ... (code before swipe handlers)
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.bindingAdapterPosition
-                val removedTask = displayList[position]
-                displayList.removeAt(position)
-                adapter.notifyItemRemoved(position)
-                val indexOfRemovedTaskInFullList = fullList.indexOfFirst { it.id == removedTask.id }
-                if (indexOfRemovedTaskInFullList != -1) fullList.removeAt(indexOfRemovedTaskInFullList)
-                StorageHelper.saveTasks(this@MainActivity, fullList)
-                if (fullList.size > 1) adapter.sortTasks(this@MainActivity)
-                updateEmptyView()
-
-                Snackbar.make(binding.root, getString(R.string.removeSnackbarMessage, removedTask.title), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo)) {
-                        displayList.add(position, removedTask)
-                        adapter.notifyItemInserted(position)
-                        fullList.add(indexOfRemovedTaskInFullList, removedTask)
-                        StorageHelper.saveTasks(this@MainActivity, fullList)
-                        adapter.sortTasks(this@MainActivity)
-                        updateEmptyView()
-
-                    }.show()
-            }
+        val leftSwipeHandler = LeftSwipeHandler(this, adapter, fullList, displayList) {
+            updateEmptyView()
+            if (fullList.size > 1) adapter.sortTasks(this)
         }
         ItemTouchHelper(leftSwipeHandler).attachToRecyclerView(binding.recyclerView)
 
-        val rightSwipeHandler = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ) = false
-
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                RecyclerViewSwipeDecorator.Builder(
-                    c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
-                ).addSwipeRightBackgroundColor(
-                    ContextCompat.getColor(this@MainActivity, R.color.teal)
-                )
-                    .addSwipeRightActionIcon(R.drawable.archive_check_svgrepo_com_24)
-                    .setSwipeRightActionIconTint(MaterialColors.getColor(this@MainActivity,
-                        com.google.android.material.R.attr.colorSurfaceInverse,
-                        Color.WHITE)
-                    )
-                    .addSwipeRightLabel(getString(R.string.archive))
-                    .setSwipeRightLabelColor(MaterialColors.getColor(this@MainActivity,
-                        com.google.android.material.R.attr.colorSurfaceInverse,
-                        Color.WHITE)
-                    )
-                    .create()
-                    .decorate()
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                updateEmptyView()
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.bindingAdapterPosition
-                val archivedTask = displayList[position]
-                archivedTask.isArchived = true
-
-                val indexInFullList = fullList.indexOfFirst { it.id == archivedTask.id }
-                if (indexInFullList != -1) {
-                    fullList[indexInFullList] = archivedTask
-                    StorageHelper.saveTasks(this@MainActivity, fullList)
-                }
-
-                displayList.removeAt(position)
-                adapter.notifyItemRemoved(position)
-                updateEmptyView()
-                if (fullList.size > 1) adapter.sortTasks(this@MainActivity)
-
-                Snackbar.make(binding.root, getString(R.string.archiveSnackbarMessage, archivedTask.title), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo)) {
-                        archivedTask.isArchived = false
-
-                        if (indexInFullList != -1) {
-                            fullList[indexInFullList] = archivedTask
-                            StorageHelper.saveTasks(this@MainActivity, fullList)
-                        }
-                        displayList.add(position, archivedTask)
-                        adapter.notifyItemInserted(position)
-                        updateEmptyView()
-                        adapter.sortTasks(this@MainActivity)
-                    }.show()
-            }
+        val rightSwipeHandler = RightSwipeHandler(this, adapter, fullList, displayList) {
+            updateEmptyView()
+            if (fullList.size > 1) adapter.sortTasks(this)
         }
         ItemTouchHelper(rightSwipeHandler).attachToRecyclerView(binding.recyclerView)
+
+// ... (rest of the onCreate code)
+
 
         binding.recyclerView.itemAnimator = FadeItemAnimator()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
