@@ -1,30 +1,23 @@
 package com.amirsteinbeck.taskmate
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.FadeItemAnimator
 import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
 import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.taskmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.color.MaterialColors
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.Locale
 
 
@@ -135,18 +128,11 @@ class MainActivity : AppCompatActivity() {
         adapter = TaskAdapter(
             displayList,
             if (LocaleHelper.getLanguage(this) == "en") "ltr" else "rtl",
-            { clickedTask, position ->
-//                NavigationHelper.goToTaskDetails(this, clickedTask.title, clickedTask.description)
-
-            },
+            { clickedTask, position -> {}},
             { clickedTask, position -> openTaskBottomSheet(clickedTask, position, true) }
             )
 
         adapter.sortTasks(this)
-
-        // In MainActivity.kt, inside the onCreate method
-
-// ... (code before swipe handlers)
 
         val leftSwipeHandler = LeftSwipeHandler(this, adapter, fullList, displayList) {
             updateEmptyView()
@@ -159,8 +145,6 @@ class MainActivity : AppCompatActivity() {
             if (fullList.size > 1) adapter.sortTasks(this)
         }
         ItemTouchHelper(rightSwipeHandler).attachToRecyclerView(binding.recyclerView)
-
-// ... (rest of the onCreate code)
 
 
         binding.recyclerView.itemAnimator = FadeItemAnimator()
