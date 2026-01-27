@@ -53,4 +53,8 @@
     <string name="SelectLanguage">Select Language</string>
     <string name="language">Language</string>
     <string name="nightMode">Night Mode</string>
+    <string name="dueDate">Due Date:</string>
+    <string name="datePicker">Pick a due date</string>
+    <string name="dateDemanderTitle">Please select a date</string>
+    <string name="timeDemanderTitle">Please select a time</string>
 </resources>

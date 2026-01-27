@@ -77,6 +77,25 @@
                 android:hint="@string/descriptionInputHint"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="25dp"
+            android:text="@string/dueDate"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dateTimePickerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="?attr/colorButtonNormal"
+            android:text="@string/datePicker"
+            android:textColor="@color/black"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
             android:layout_width="match_parent"

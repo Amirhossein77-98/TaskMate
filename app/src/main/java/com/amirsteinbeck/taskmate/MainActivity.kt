@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -17,7 +18,15 @@ import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.LocaleHelper
 import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.taskmate.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.util.Locale
 
 
@@ -79,7 +88,8 @@ class MainActivity : AppCompatActivity() {
 
             val titleInput = view.findViewById<TextInputEditText>(R.id.editTitle)
             val descInput = view.findViewById<TextInputEditText>(R.id.editDescription)
-            val saveButton = view.findViewById<View>(R.id.saveButton)
+            val saveButton = view.findViewById<Button>(R.id.saveButton)
+            val dateTimePickerBtn = view.findViewById<Button>(R.id.dateTimePickerBtn)
 
             if (!isEdit) saveButton.isEnabled = false
 
@@ -97,6 +107,48 @@ class MainActivity : AppCompatActivity() {
             titleInput.addTextChangedListener {
                 saveButton.isEnabled = !it.isNullOrBlank()
             }
+
+            var selectedDateTime: LocalDateTime? = null
+
+            dateTimePickerBtn.setOnClickListener {
+                val datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText(R.string.dateDemanderTitle)
+                    .build()
+
+                datePicker.show(supportFragmentManager, "DATE_PICKER")
+
+                datePicker.addOnPositiveButtonClickListener { selection ->
+                    val selectedDate = Instant.ofEpochMilli(selection)
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate()
+
+                    val timePicker = MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(12)
+                        .setMinute(30)
+                        .setTitleText("@string/timeDemanderTitle")
+                        .build()
+
+                    timePicker.show(supportFragmentManager, "TIME_PICKER")
+
+                    timePicker.addOnPositiveButtonClickListener {
+                        val hour = timePicker.hour
+                        val minute = timePicker.minute
+
+                        selectedDateTime = LocalDateTime.of(
+                            selectedDate,
+                            LocalTime.of(hour, minute)
+                        )
+
+                        dateTimePickerBtn.text =
+                            if (selectedDateTime != null)
+                                "${selectedDateTime.year}/${selectedDateTime.monthValue}/${selectedDateTime.dayOfMonth} at ${selectedDateTime.hour}:${selectedDateTime.minute}"
+                            else getString(R.string.datePicker)
+                    }
+                }
+            }
+
+
 
             saveButton.setOnClickListener {
                 val newTitle = titleInput.text.toString().trim()

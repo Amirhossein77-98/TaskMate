@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.material)
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
+    implementation("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

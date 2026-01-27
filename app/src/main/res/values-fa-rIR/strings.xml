@@ -54,4 +54,8 @@
     <string name="SelectLanguage">انتخاب زبان</string>
     <string name="language">زبان</string>
     <string name="nightMode">حالت شب</string>
+    <string name="dueDate">زمان انجام:</string>
+    <string name="datePicker">لطفا یک زمان انجام انتخاب کنید</string>
+    <string name="dateDemanderTitle">لطفاً یک تاریخ انتخاب کنید</string>
+    <string name="timeDemanderTitle">لطفاً یک زمان انتخاب کنید</string>
 </resources>
