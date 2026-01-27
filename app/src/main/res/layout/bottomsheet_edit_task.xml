@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/titleTitle"
-        android:textSize="18dp"
-        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/titleTitle"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/titleLayout"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/titleInputHint"
-                android:capitalize="sentences"
+                android:inputType="textCapSentences"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:focusedByDefault="true"
@@ -46,17 +46,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/descTitle"
-        android:textSize="18dp"
-        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/descTitle"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
-
-    <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionLayout"
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
@@ -74,7 +73,7 @@
                 android:id="@+id/editDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:capitalize="sentences"
+                android:inputType="textCapSentences"
                 android:hint="@string/descriptionInputHint"/>
         </com.google.android.material.textfield.TextInputLayout>
 
