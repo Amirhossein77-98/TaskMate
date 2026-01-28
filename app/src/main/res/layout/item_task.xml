@@ -61,12 +61,23 @@
                 android:id="@+id/taskAddedDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/descriptionPlaceholder"
+                android:text="@string/taskSubmissionDatePlaceHolder"
                 android:textSize="14sp"
                 android:paddingTop="2dp"
                 app:layout_constraintStart_toEndOf="@id/taskDone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/taskDescription"/>
+
+            <TextView
+                android:id="@+id/taskDueDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/taskDueDatePlaceHolder"
+                android:textSize="14sp"
+                android:paddingTop="2dp"
+                app:layout_constraintStart_toEndOf="@id/taskDone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/taskAddedDate"/>
 
 <!--            <TextView-->
 <!--                android:id="@+id/taskAddedTime"-->

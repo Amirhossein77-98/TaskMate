@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.graphics.Paint
 import android.icu.text.SimpleDateFormat
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.amirsteinbeck.taskmate.com.amirsteinbeck.focusmate.SettingsHelper
 import com.amirsteinbeck.taskmate.databinding.ItemTaskBinding
+import java.time.Instant
+import java.time.ZoneId
 import java.util.Date
 import java.util.Locale
+import kotlin.math.log
 
 class TaskAdapter (
     private val tasks: MutableList<Task>,
@@ -50,6 +54,7 @@ class TaskAdapter (
             binding.taskTitle.alpha = 0.5f
             binding.taskDescription.alpha = 0.5f
             binding.taskAddedDate.alpha = 0.5f
+            binding.taskDueDate.alpha = 0.5f
         }
 
         fun unStriker() {
@@ -59,6 +64,7 @@ class TaskAdapter (
             binding.taskTitle.alpha = 1f
             binding.taskDescription.alpha = 1f
             binding.taskAddedDate.alpha = 1f
+            binding.taskDueDate.alpha = 0.5f
         }
 
         fun isRtl(text: String): Boolean {
@@ -76,6 +82,13 @@ class TaskAdapter (
             binding.taskDescription.text = task.description
             val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id)
             binding.taskAddedDate.text = relativeTimeStamp
+            val dateTime = Instant.ofEpochMilli(task.due)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+
+            binding.taskDueDate.text =
+                "${dateTime.year}/${dateTime.monthValue}/${dateTime.dayOfMonth} at ${dateTime.hour}:${dateTime.minute}"
+
 
             if (layoutDir == "ltr") {
                 binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_START
@@ -84,12 +97,16 @@ class TaskAdapter (
                 else View.TEXT_ALIGNMENT_TEXT_END
                 binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskDueDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_START
+                else View.TEXT_ALIGNMENT_TEXT_END
             } else {
                 binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
                 binding.taskDescription.textAlignment = if (!isRtl(task.description)) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
                 binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_END
+                else View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskDueDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
             }
 

@@ -57,4 +57,6 @@
     <string name="datePicker">Pick a due date</string>
     <string name="dateDemanderTitle">Please select a date</string>
     <string name="timeDemanderTitle">Please select a time</string>
+    <string name="taskSubmissionDatePlaceHolder">Submission Time</string>
+    <string name="taskDueDatePlaceHolder">Due Time</string>
 </resources>

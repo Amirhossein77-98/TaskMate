@@ -58,4 +58,6 @@
     <string name="datePicker">لطفا یک زمان انجام انتخاب کنید</string>
     <string name="dateDemanderTitle">لطفاً یک تاریخ انتخاب کنید</string>
     <string name="timeDemanderTitle">لطفاً یک زمان انتخاب کنید</string>
+    <string name="taskSubmissionDatePlaceHolder">زمان ثبت وظیفه</string>
+    <string name="taskDueDatePlaceHolder">زمان انجام وظیفه</string>
 </resources>

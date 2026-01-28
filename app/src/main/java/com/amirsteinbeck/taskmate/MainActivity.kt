@@ -27,6 +27,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
@@ -148,18 +149,24 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
-
             saveButton.setOnClickListener {
                 val newTitle = titleInput.text.toString().trim()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                 val newDesc = descInput.text.toString().trim()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
+                val savableDue =
+                    if (selectedDateTime != null) selectedDateTime?.atZone(ZoneId.systemDefault())
+                    ?.toInstant()
+                    ?.toEpochMilli()
+                    ?: System.currentTimeMillis()
+                    else System.currentTimeMillis()
+
                 val theTask = Task(
                     newTitle,
                     newDesc.ifEmpty { getString(R.string.newTask) },
-                    false)
+                    false,
+                    due = savableDue)
 
                 if (isEdit) adapter.updateItem(position, theTask) else adapter.addItem(theTask)
                 StorageHelper.saveTasks(this, displayList)
