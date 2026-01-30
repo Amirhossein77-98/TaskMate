@@ -21,10 +21,10 @@ class TaskAdapter (
     private val tasks: MutableList<Task>,
     private val layoutDir: String,
     private val onItemShortClick: (Task, Int) -> Unit,
-    private val onItemLongClick: (Task, Int) -> Unit
+    private val onItemLongClick: (Task, Int) -> Unit,
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    private fun formatRelativeTimestamp(context: Context, timestamp: Long): String {
+    private fun formatRelativeTimestamp(context: Context, timestamp: Long, due: Boolean): String {
         val now = System.currentTimeMillis()
         val oneDay = 24 * 60 * 60 * 1000
 
@@ -37,6 +37,13 @@ class TaskAdapter (
 
         val diffDays = (now - timestamp) / oneDay
 
+        if (due) {
+            return context.getString(
+                R.string.taskDueTimeTemplate,
+                formattedDate,
+                formattedTime
+            )
+        }
         return when (diffDays.toInt()) {
             0 -> context.getString(R.string.todayTimestamp, formattedTime)
             1 -> context.getString(R.string.yesterdayTimestamp, formattedTime)
@@ -65,7 +72,7 @@ class TaskAdapter (
             binding.taskDueDate.paintFlags = binding.taskDueDate.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskTitle.alpha = 1f
             binding.taskDescription.alpha = 1f
-            binding.taskAddedDate.alpha = 1f
+            binding.taskAddedDate.alpha = 0.7f
             binding.taskDueDate.alpha = 1f
         }
 
@@ -78,37 +85,32 @@ class TaskAdapter (
 
         fun bind(task: Task) {
             binding.taskDone.setOnCheckedChangeListener(null)
-
+            val context = binding.root.context
             binding.taskDone.isChecked = task.isDone
             binding.taskTitle.text = task.title
-            binding.taskDescription.text = task.description
-            val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id)
-            binding.taskAddedDate.text = "Added: ${relativeTimeStamp}"
-            val dateTime = Instant.ofEpochMilli(task.due)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()
-
-            binding.taskDueDate.text =
-                "Due: ${dateTime.year}/${dateTime.monthValue}/${dateTime.dayOfMonth} at ${dateTime.hour}:${dateTime.minute}"
+            binding.taskDescription.text = context.getString(R.string.taskDescTemplate, task.description)
+            val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id, false)
+            binding.taskAddedDate.text = context.getString(R.string.taskAddedTimeTemplate, relativeTimeStamp)
+            binding.taskDueDate.text = formatRelativeTimestamp(binding.root.context, task.due, true)
 
 
             if (layoutDir == "ltr") {
-                binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskTitle.textAlignment = if (!isRtl(binding.taskTitle.text.toString())) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
-                binding.taskDescription.textAlignment = if (!isRtl(task.description)) View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskDescription.textAlignment = if (!isRtl(binding.taskDescription.text.toString())) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
-                binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskAddedDate.textAlignment = if (!isRtl(binding.taskAddedDate.text.toString())) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
-                binding.taskDueDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_START
+                binding.taskDueDate.textAlignment = if (!isRtl(binding.taskDueDate.text.toString())) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
             } else {
-                binding.taskTitle.textAlignment = if (!isRtl(task.title)) View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskTitle.textAlignment = if (!isRtl(binding.taskTitle.text.toString())) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
-                binding.taskDescription.textAlignment = if (!isRtl(task.description)) View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskDescription.textAlignment = if (!isRtl(binding.taskDescription.text.toString())) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
-                binding.taskAddedDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskAddedDate.textAlignment = if (!isRtl(binding.taskAddedDate.text.toString())) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
-                binding.taskDueDate.textAlignment = if (!isRtl(relativeTimeStamp)) View.TEXT_ALIGNMENT_TEXT_END
+                binding.taskDueDate.textAlignment = if (!isRtl(binding.taskDueDate.text.toString())) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
             }
 

@@ -59,4 +59,7 @@
     <string name="timeDemanderTitle">Please select a time</string>
     <string name="taskSubmissionDatePlaceHolder">Submission Time</string>
     <string name="taskDueDatePlaceHolder">Due Time</string>
+    <string name="taskAddedTimeTemplate">Added: %1$s</string>
+    <string name="taskDueTimeTemplate">Due: %1$s at %2$s</string>
+    <string name="taskDescTemplate">Description: %1$s</string>
 </resources>

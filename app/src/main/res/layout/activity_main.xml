@@ -169,6 +169,7 @@
             app:strokeColor="?attr/colorOutlineVariant"
             app:layout_constraintStart_toEndOf="@id/inputCard"
             app:layout_constraintTop_toTopOf="@id/inputCard"
+            app:layout_constraintBottom_toBottomOf ="@id/inputCard"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

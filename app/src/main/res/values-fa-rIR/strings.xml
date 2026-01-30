@@ -40,8 +40,8 @@
     <string name="time">زمان</string>
     <string name="dateAdded">تاریخ اضافه شدن: %1$s</string>
     <string name="timeAdded">زمان اضافه شدن: %1$s</string>
-    <string name="todayTimestamp">امروز در %1$s</string>
-    <string name="yesterdayTimestamp">دیروز در %1$s</string>
+    <string name="todayTimestamp">امروز ساعت %1$s</string>
+    <string name="yesterdayTimestamp">دیروز ساعت %1$s</string>
     <string name="thisWeekTimestampt">این هفته</string>
     <string name="oldTasksTimestamp">وظیفه ای قدیمی از زمان %1$s</string>
     <string name="mainPage">صفحه اصلی</string>
@@ -60,4 +60,7 @@
     <string name="timeDemanderTitle">لطفاً یک زمان انتخاب کنید</string>
     <string name="taskSubmissionDatePlaceHolder">زمان ثبت وظیفه</string>
     <string name="taskDueDatePlaceHolder">زمان انجام وظیفه</string>
+    <string name="taskAddedTimeTemplate">اضافه شده در: %1$s</string>
+    <string name="taskDueTimeTemplate">زمان انجام: %1$s ساعت %2$s</string>
+    <string name="taskDescTemplate">توضیحات: %1$s</string>
 </resources>

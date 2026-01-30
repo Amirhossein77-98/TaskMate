@@ -174,8 +174,8 @@ class MainActivity : AppCompatActivity() {
 
 
                 dialog.dismiss()
-                updateLists()
                 fullList.add(theTask)
+                updateLists()
                 updateEmptyView()
                 adapter.sortTasks(this)
             }
