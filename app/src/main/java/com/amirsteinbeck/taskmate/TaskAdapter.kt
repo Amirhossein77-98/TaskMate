@@ -51,6 +51,7 @@ class TaskAdapter (
             binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.taskDescription.paintFlags = binding.taskDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.taskAddedDate.paintFlags = binding.taskAddedDate.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.taskDueDate.paintFlags = binding.taskDueDate.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.taskTitle.alpha = 0.5f
             binding.taskDescription.alpha = 0.5f
             binding.taskAddedDate.alpha = 0.5f
@@ -61,10 +62,11 @@ class TaskAdapter (
             binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskDescription.paintFlags = binding.taskDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskAddedDate.paintFlags = binding.taskAddedDate.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.taskDueDate.paintFlags = binding.taskDueDate.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             binding.taskTitle.alpha = 1f
             binding.taskDescription.alpha = 1f
             binding.taskAddedDate.alpha = 1f
-            binding.taskDueDate.alpha = 0.5f
+            binding.taskDueDate.alpha = 1f
         }
 
         fun isRtl(text: String): Boolean {
@@ -81,13 +83,13 @@ class TaskAdapter (
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
             val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id)
-            binding.taskAddedDate.text = relativeTimeStamp
+            binding.taskAddedDate.text = "Added: ${relativeTimeStamp}"
             val dateTime = Instant.ofEpochMilli(task.due)
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime()
 
             binding.taskDueDate.text =
-                "${dateTime.year}/${dateTime.monthValue}/${dateTime.dayOfMonth} at ${dateTime.hour}:${dateTime.minute}"
+                "Due: ${dateTime.year}/${dateTime.monthValue}/${dateTime.dayOfMonth} at ${dateTime.hour}:${dateTime.minute}"
 
 
             if (layoutDir == "ltr") {
@@ -133,7 +135,7 @@ class TaskAdapter (
 
             if (task.isDone) striker() else unStriker()
 
-            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->  // ← This is set TWICE!
+            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
                 task.isDone = isChecked
 
                 scaleUpX.start()
