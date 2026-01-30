@@ -83,17 +83,7 @@ class TaskAdapter (
                     firstChar in '\u08A0' .. '\u08FF'
         }
 
-        fun bind(task: Task) {
-            binding.taskDone.setOnCheckedChangeListener(null)
-            val context = binding.root.context
-            binding.taskDone.isChecked = task.isDone
-            binding.taskTitle.text = task.title
-            binding.taskDescription.text = context.getString(R.string.taskDescTemplate, task.description)
-            val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id, false)
-            binding.taskAddedDate.text = context.getString(R.string.taskAddedTimeTemplate, relativeTimeStamp)
-            binding.taskDueDate.text = formatRelativeTimestamp(binding.root.context, task.due, true)
-
-
+        fun localizeTextDir() {
             if (layoutDir == "ltr") {
                 binding.taskTitle.textAlignment = if (!isRtl(binding.taskTitle.text.toString())) View.TEXT_ALIGNMENT_TEXT_START
                 else View.TEXT_ALIGNMENT_TEXT_END
@@ -113,6 +103,19 @@ class TaskAdapter (
                 binding.taskDueDate.textAlignment = if (!isRtl(binding.taskDueDate.text.toString())) View.TEXT_ALIGNMENT_TEXT_END
                 else View.TEXT_ALIGNMENT_TEXT_START
             }
+        }
+
+        fun bind(task: Task) {
+            binding.taskDone.setOnCheckedChangeListener(null)
+            val context = binding.root.context
+            binding.taskDone.isChecked = task.isDone
+            binding.taskTitle.text = task.title
+            binding.taskDescription.text = context.getString(R.string.taskDescTemplate, task.description)
+            val relativeTimeStamp = formatRelativeTimestamp(binding.root.context, task.id, false)
+            binding.taskAddedDate.text = context.getString(R.string.taskAddedTimeTemplate, relativeTimeStamp)
+            binding.taskDueDate.text = formatRelativeTimestamp(binding.root.context, task.due, true)
+
+            localizeTextDir()
 
             binding.root.setOnClickListener {
                 onItemShortClick(task, bindingAdapterPosition)
@@ -128,12 +131,6 @@ class TaskAdapter (
             scaleUpX.duration = 150
             scaleUpY.duration = 150
             binding.taskDone.isChecked = task.isDone
-
-            binding.taskDone.setOnCheckedChangeListener { _, isChecked ->
-                task.isDone = isChecked
-                sortTasks(binding.root.context)
-                notifyItemChanged(bindingAdapterPosition)
-            }
 
             if (task.isDone) striker() else unStriker()
 
