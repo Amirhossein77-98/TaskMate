@@ -63,4 +63,5 @@
     <string name="taskAddedTimeTemplate">اضافه شده در: %1$s</string>
     <string name="taskDueTimeTemplate">زمان انجام: %1$s ساعت %2$s</string>
     <string name="taskDescTemplate">توضیحات: %1$s</string>
+    <string name="DateTimePickerBtnTemplate">%1$s/%2$s/%3$s ساعت %4$s:%5$s</string>
 </resources>

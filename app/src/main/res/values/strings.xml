@@ -62,4 +62,5 @@
     <string name="taskAddedTimeTemplate">Added: %1$s</string>
     <string name="taskDueTimeTemplate">Due: %1$s at %2$s</string>
     <string name="taskDescTemplate">Description: %1$s</string>
+    <string name="DateTimePickerBtnTemplate">%1$s/%2$s/%3$s at %4$s:%5$s</string>
 </resources>

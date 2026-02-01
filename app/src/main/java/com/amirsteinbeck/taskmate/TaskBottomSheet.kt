@@ -77,8 +77,12 @@ object TaskBottomSheet {
                     )
 
                     dateTimePickerBtn.text =
-                        "${date.year}/${date.monthValue}/${date.dayOfMonth} " +
-                                "${timePicker.hour}:${timePicker.minute}"
+                        activity.getString(R.string.DateTimePickerBtnTemplate,
+                            date.year.toString(),
+                            date.monthValue.toString(),
+                            date.dayOfMonth.toString(),
+                            timePicker.hour.toString(),
+                            timePicker.minute.toString())
                 }
             }
         }
