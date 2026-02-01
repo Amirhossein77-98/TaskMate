@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.timepicker.TimeFormat
 import java.time.Instant
 import java.time.LocalDateTime
@@ -48,6 +49,17 @@ object TaskBottomSheet {
                 imm.showSoftInput(titleInput, InputMethodManager.SHOW_IMPLICIT)
             }
         }
+
+        titleInput.addTextChangedListener {
+            if (!it.isNullOrBlank() && it.length > 2) {
+
+                saveButton.isEnabled = true
+            } else {
+
+                saveButton.isEnabled = false
+            }
+        }
+
         var selectedDateTime: LocalDateTime? = null
 
         dateTimePickerBtn.setOnClickListener {
